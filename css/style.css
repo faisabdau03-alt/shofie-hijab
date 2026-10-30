@@ -1,0 +1,303 @@
+/* ==========================================================
+   SHOFIE HIJAB - ELEGANT E-COMMERCE LANDING PAGE STYLES
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #9C5248;
+  --primary-hover: #833e35;
+  --primary-light: #FBEFEF;
+  --primary-subtle: #F3DDD8;
+  --secondary: #D4AF37;
+  --secondary-hover: #b89728;
+  --accent-gold: #C59A45;
+  --bg-cream: #FBF8F5;
+  --bg-card: #FFFFFF;
+  --text-dark: #2A211F;
+  --text-muted: #6E635F;
+  --border-soft: #EFE7DE;
+  --shadow-sm: 0 2px 8px rgba(156, 82, 72, 0.06);
+  --shadow-md: 0 10px 25px rgba(156, 82, 72, 0.08);
+  --shadow-lg: 0 20px 40px rgba(156, 82, 72, 0.12);
+}
+
+/* Custom Reset & Typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-cream);
+}
+
+.font-serif-luxury {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1eae2;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4b5ab;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Glassmorphism Navigation */
+.navbar-glass {
+  background: rgba(251, 248, 245, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(224, 207, 196, 0.5);
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  box-shadow: 0 4px 20px rgba(120, 70, 60, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+/* Hero Badge Glow */
+.hero-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15), rgba(156, 82, 72, 0.05) 70%, transparent 100%);
+}
+
+/* Product Card Styling */
+.product-card {
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 1px solid var(--border-soft);
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: #E2CFCA;
+}
+
+.product-image-container img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .product-image-container img {
+  transform: scale(1.06);
+}
+
+/* Color Swatches */
+.color-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  box-shadow: 0 0 0 1px #d6c5bb;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-swatch:hover, .color-swatch.active {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* WhatsApp Floating Button */
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-btn {
+  background: #25D366;
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  text-decoration: none;
+}
+
+.wa-btn:hover {
+  transform: scale(1.1) rotate(6deg);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+}
+
+.wa-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #25D366;
+  opacity: 0.7;
+  animation: waPulseAnim 2s infinite;
+  z-index: -1;
+}
+
+@keyframes waPulseAnim {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.wa-tooltip {
+  background: white;
+  color: #2D3748;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  animation: bounceX 2s infinite;
+}
+
+@keyframes bounceX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+/* Slide-over Drawer */
+.cart-drawer-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cart-drawer-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-drawer {
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-drawer.active {
+  transform: translateX(0);
+}
+
+/* Modals */
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  transform: scale(0.95) translateY(20px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Live Purchase Toast */
+.live-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 85;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-left: 4px solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 340px;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.live-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Badge Shimmer */
+.badge-gold {
+  background: linear-gradient(135deg, #e7c87c 0%, #c4993a 100%);
+  color: #2b1f0d;
+}
+
+.badge-primary {
+  background: linear-gradient(135deg, #9C5248 0%, #BD6E63 100%);
+  color: white;
+}
+
+/* Category Filter Pill */
+.filter-btn {
+  transition: all 0.25s ease;
+  border: 1px solid var(--border-soft);
+}
+
+.filter-btn:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-subtle);
+  color: var(--primary);
+}
+
+.filter-btn.active {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(156, 82, 72, 0.25);
+}
+
+/* Wave Divider */
+.custom-shape-divider-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 48px;
+}
+

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shofie Hijab - Koleksi Hijab Premium & Modest Fashion Cantik</title>
+  <meta name="description" content="Toko online resmi Shofie Hijab. Koleksi pashmina shimmer, voal paris premium, bergo maryam, dan hijab syar'i bahan adem, tegak di dahi, serta jahitan butik. Pesan langsung via WhatsApp." />
+  
+  <!-- Favicon icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧕</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#FDF7F6',
+              100: '#FBEFEF',
+              200: '#F6DDD9',
+              300: '#ECC2BA',
+              400: '#DC9D91',
+              500: '#C97D73',
+              600: '#B46156',
+              700: '#9C5248',
+              800: '#83423A',
+              900: '#6C3630',
+            },
+            champagne: '#EED9C4',
+            gold: '#D4AF37'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-[#FAF7F4] text-[#2A211F] antialiased selection:bg-rose-200 selection:text-rose-900">
+
+  <!-- ==========================================================
+       TOP ANNOUNCEMENT BAR
+       ========================================================== -->
+  <div class="bg-rose-900 text-rose-100 text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="bg-amber-400 text-neutral-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Promo Spesial</span>
+        <span>✨ Diskon s.d 35% + Voucher Potongan Rp 10.000 dengan kode: <strong class="text-amber-300 font-mono">SHOFIEBARU</strong></span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-rose-200">
+        <span class="flex items-center gap-1.5"><i class="fas fa-truck-fast"></i> Pengiriman Cepat Se-Indonesia</span>
+        <span>|</span>
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Shofie%20Hijab,%20saya%20butuh%20bantuan%20konsultasi" target="_blank" class="hover:text-white transition flex items-center gap-1">
+          <i class="fab fa-whatsapp"></i> CS WhatsApp: 0812-3456-7890
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       MAIN NAVBAR (GLASSMORPHISM)
+       ========================================================== -->
+  <header id="mainNavbar" class="navbar-glass sticky top-0 z-40 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-rose-800 to-rose-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+            <span class="font-serif-luxury text-2xl font-bold tracking-tight">S</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif-luxury text-2xl md:text-3xl font-extrabold tracking-wide text-neutral-900 leading-none">
+              Shofie<span class="text-rose-700">.</span>Hijab
+            </span>
+            <span class="text-[10px] tracking-widest text-neutral-500 uppercase font-medium mt-0.5">Modest Elegance</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-neutral-700">
+          <a href="#beranda" class="hover:text-rose-700 transition">Beranda</a>
+          <a href="#keunggulan" class="hover:text-rose-700 transition">Keunggulan</a>
+          <a href="#katalog" class="text-rose-800 hover:text-rose-900 font-bold transition flex items-center gap-1">
+            <span>Katalog Hijab</span>
+            <span class="w-2 h-2 rounded-full bg-rose-600 animate-pulse"></span>
+          </a>
+          <a href="#flashsale" class="hover:text-rose-700 transition">Flash Sale</a>
+          <a href="#testimoni" class="hover:text-rose-700 transition">Testimoni</a>
+          <a href="#faq" class="hover:text-rose-700 transition">Bantuan & FAQ</a>
+        </nav>
+
+        <!-- Right Action Icons (Cart & Mobile Menu Button) -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Search trigger in header -->
+          <a href="#katalog" onclick="document.getElementById('searchInput')?.focus()" class="w-10 h-10 rounded-full border border-stone-200 hover:border-rose-300 hover:bg-rose-50 flex items-center justify-center text-neutral-600 hover:text-rose-700 transition" title="Cari Produk">
+            <i class="fas fa-search text-sm"></i>
+          </a>
+
+          <!-- Cart Button with live counter -->
+          <button 
+            type="button" 
+            onclick="openCartDrawer()" 
+            class="relative px-4 py-2.5 rounded-full bg-rose-800 hover:bg-rose-900 text-white font-semibold text-xs md:text-sm flex items-center gap-2 shadow-sm transition active:scale-95"
+            title="Buka Keranjang Belanja">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="hidden sm:inline">Keranjang</span>
+            <span id="cartCountBadge" class="hidden w-5 h-5 bg-amber-400 text-neutral-900 rounded-full text-[11px] font-extrabold items-center justify-center -mr-1">
+              0
+            </span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button 
+            type="button" 
+            onclick="toggleMobileMenu()" 
+            class="lg:hidden w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center text-neutral-700 hover:bg-stone-100 transition"
+            aria-label="Menu Navigasi">
+            <i class="fas fa-bars"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-stone-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 shadow-xl">
+      <div class="flex flex-col gap-3 text-sm font-semibold text-neutral-800">
+        <a href="#beranda" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Beranda</a>
+        <a href="#keunggulan" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Keunggulan Bahan</a>
+        <a href="#katalog" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg bg-rose-50 text-rose-800 font-bold transition flex justify-between items-center">
+          <span>Katalog Produk</span>
+          <span class="text-xs px-2 py-0.5 bg-rose-200 text-rose-800 rounded-full font-bold">Lengkap</span>
+        </a>
+        <a href="#flashsale" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Promo Flash Sale</a>
+        <a href="#testimoni" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Ulasan Pembeli</a>
+        <a href="#faq" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">FAQ & Bantuan</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================
+       HERO BANNER SECTION
+       ========================================================== -->
+  <section id="beranda" class="relative pt-8 pb-16 md:pt-14 md:pb-24 overflow-hidden">
+    <!-- Decorative background glow blobs -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-rose-200/40 via-amber-100/30 to-rose-100/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          
+          <!-- Quality Tag -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100/80 border border-rose-200 text-rose-900 text-xs font-bold tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+            Koleksi Terbaru Muslimah 2026
+          </div>
+
+          <!-- Main Heading -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif-luxury font-bold text-neutral-900 leading-[1.15]">
+            Elegan, Nyaman & <span class="italic text-rose-800">Menawan</span> di Setiap Momen.
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-neutral-600 text-base md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            Hadirkan sentuhan anggun dengan hijab premium Shofie. Dibuat dari serat pilihan yang sejuk, jatuh sempurna, tidak menerawang, dan mudah dibentuk tegak paripurna di dahi tanpa ribet.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#katalog" class="w-full sm:w-auto px-8 py-4 bg-rose-800 hover:bg-rose-900 text-white font-bold rounded-2xl shadow-lg shadow-rose-900/25 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-sm md:text-base">
+              <span>Buka Katalog Sekarang</span>
+              <i class="fas fa-arrow-right text-xs"></i>
+            </a>
+            <a href="https://wa.me/6281234567890?text=Halo%20Shofie%20Hijab,%20saya%20mau%20tanya-tanya%20seputar%20koleksi%20hijabnya" target="_blank" class="w-full sm:w-auto px-7 py-4 bg-white hover:bg-stone-50 border border-stone-200 hover:border-emerald-500 text-neutral-800 hover:text-emerald-700 font-bold rounded-2xl shadow-sm flex items-center justify-center gap-3 transition-all text-sm md:text-base">
+              <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
+              <span>Konsultasi Warna via WA</span>
+            </a>
+          </div>
+
+          <!-- Value highlights bar -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-stone-200/80 max-w-lg mx-auto lg:mx-0 text-left">
+            <div>
+              <div class="text-2xl font-serif-luxury font-extrabold text-neutral-900">50K+</div>
+              <div class="text-[11px] text-neutral-500 font-medium">Pelanggan Setia</div>
+            </div>
+            <div>
+              <div class="text-2xl font-serif-luxury font-extrabold text-neutral-900">4.9 ★</div>
+              <div class="text-[11px] text-neutral-500 font-medium">Rating Kepuasan</div>
+            </div>
+            <div>
+              <div class="text-2xl font-serif-luxury font-extrabold text-neutral-900">100%</div>
+              <div class="text-[11px] text-neutral-500 font-medium">Bahan Premium Ori</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Hero Visual Collage -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            
+            <!-- Main Hero Image Card -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-stone-200 aspect-[4/5]">
+              <img 
+                src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=80" 
+                alt="Shofie Hijab Model Elegan" 
+                class="w-full h-full object-cover object-center"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              <div class="absolute bottom-6 left-6 right-6 text-white">
+                <span class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-semibold uppercase tracking-wider mb-2 inline-block">
+                  Signature Silk Series
+                </span>
+                <h3 class="text-2xl font-serif-luxury font-bold">Pashmina Silk Shimmer</h3>
+                <p class="text-xs text-stone-200 mt-1">Kilau mewah & tidak licin di kepala.</p>
+              </div>
+            </div>
+
+            <!-- Floating Pill Badge 1 (Top Left) -->
+            <div class="absolute -top-4 -left-4 sm:-left-6 bg-white/95 backdrop-blur-md py-3 px-4 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                <i class="fas fa-crown"></i>
+              </div>
+              <div>
+                <p class="text-[11px] text-neutral-400 font-medium">Kualitas Terjamin</p>
+                <p class="text-xs font-bold text-neutral-800">Garansi Tukar Baru</p>
+              </div>
+            </div>
+
+            <!-- Floating Pill Badge 2 (Bottom Right) -->
+            <div class="absolute -bottom-5 -right-4 sm:-right-6 bg-white/95 backdrop-blur-md py-3 px-4 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                <i class="fab fa-whatsapp text-lg"></i>
+              </div>
+              <div>
+                <p class="text-[11px] text-neutral-400 font-medium">Order Sangat Mudah</p>
+                <p class="text-xs font-bold text-neutral-800">Langsung ke WhatsApp</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       KEUNGGULAN PRODUK (VALUE PROPOSITIONS)
+       ========================================================== -->
+  <section id="keunggulan" class="py-16 bg-white border-y border-stone-200/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-rose-700 text-xs font-bold tracking-widest uppercase">Kenapa Memilih Kami?</span>
+        <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold text-neutral-900 mt-2 mb-4">
+          Standar Kenyamanan & Keindahan Shofie Hijab
+        </h2>
+        <p class="text-neutral-500 text-sm leading-relaxed">
+          Kami memahami setiap muslimah menginginkan hijab yang tidak hanya menawan dipandang, tetapi juga sangat nyaman dikenakan dari pagi hingga malam.
+        </p>
+      </div>
+
+      <!-- 4 Pillars Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Pillar 1 -->
+        <div class="p-6 rounded-2xl bg-[#FCFAF8] border border-stone-100 hover:border-rose-200 transition-all hover:shadow-md group">
+          <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center text-xl mb-5 group-hover:scale-110 transition-transform">
+            <i class="fas fa-wind"></i>
+          </div>
+          <h3 class="font-serif-luxury font-bold text-xl text-neutral-900 mb-2">Bahan Super Adem</h3>
+          <p class="text-neutral-600 text-xs leading-relaxed">
+            Serat kain pori halus dengan sirkulasi udara maksimal. Anti gerah dan tidak membuat telinga berdengung atau pengap saat beraktivitas seharian.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="p-6 rounded-2xl bg-[#FCFAF8] border border-stone-100 hover:border-rose-200 transition-all hover:shadow-md group">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl mb-5 group-hover:scale-110 transition-transform">
+            <i class="fas fa-feather-pointed"></i>
+          </div>
+          <h3 class="font-serif-luxury font-bold text-xl text-neutral-900 mb-2">Tegak Paripurna</h3>
+          <p class="text-neutral-600 text-xs leading-relaxed">
+            Tidak letoy di dahi! Desain kain pas, tegak melengkung cantik membingkai wajah tanpa perlu menggunakan semprotan kaku ataupun banyak jarum.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="p-6 rounded-2xl bg-[#FCFAF8] border border-stone-100 hover:border-rose-200 transition-all hover:shadow-md group">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl mb-5 group-hover:scale-110 transition-transform">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3 class="font-serif-luxury font-bold text-xl text-neutral-900 mb-2">40+ Warna Aesthetic</h3>
+          <p class="text-neutral-600 text-xs leading-relaxed">
+            Pilihan warna netral, nude, earthy tone, dan pastel yang telah disesuaikan agar cocok menyatu sempurna dengan berbagai undertone kulit wanita Indonesia.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="p-6 rounded-2xl bg-[#FCFAF8] border border-stone-100 hover:border-rose-200 transition-all hover:shadow-md group">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-800 flex items-center justify-center text-xl mb-5 group-hover:scale-110 transition-transform">
+            <i class="fas fa-scissors"></i>
+          </div>
+          <h3 class="font-serif-luxury font-bold text-xl text-neutral-900 mb-2">Finishing Butik Halus</h3>
+          <p class="text-neutral-600 text-xs leading-relaxed">
+            Tepian dijahit lipit halus ganda atau dipotong rapi dengan teknologi laser cut berpresisi tinggi. Awet tidak mudah lepas dan bebas serat benang liar.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       FLASH SALE COUNTDOWN PROMO
+       ========================================================== -->
+  <section id="flashsale" class="py-12 bg-gradient-to-r from-rose-900 via-rose-800 to-neutral-900 text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <!-- Left Banner Info -->
+        <div class="text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-neutral-900 text-xs font-extrabold uppercase tracking-wider mb-3">
+            <i class="fas fa-bolt"></i> Flash Sale Hari Ini
+          </div>
+          <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold leading-tight">
+            Hemat Sampai 35% + Ekstra Voucher Belanja
+          </h2>
+          <p class="text-rose-200 text-sm mt-2 max-w-xl">
+            Berlaku untuk seluruh koleksi Pashmina Silk & Voal Paris edisi terbatas. Gunakan kode promo <strong class="text-amber-300">SHOFIEBARU</strong> saat checkout.
+          </p>
+        </div>
+
+        <!-- Countdown Timer Box -->
+        <div class="flex flex-col items-center gap-3">
+          <span class="text-xs uppercase tracking-widest text-rose-300 font-semibold">Penawaran Berakhir Dalam:</span>
+          <div class="flex items-center gap-3 text-center">
+            <div class="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 min-w-[68px]">
+              <span id="cdHours" class="text-2xl md:text-3xl font-extrabold text-amber-300">08</span>
+              <span class="block text-[10px] uppercase tracking-wider text-rose-200 mt-0.5">Jam</span>
+            </div>
+            <span class="text-2xl font-bold text-amber-300">:</span>
+            <div class="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 min-w-[68px]">
+              <span id="cdMinutes" class="text-2xl md:text-3xl font-extrabold text-amber-300">45</span>
+              <span class="block text-[10px] uppercase tracking-wider text-rose-200 mt-0.5">Menit</span>
+            </div>
+            <span class="text-2xl font-bold text-amber-300">:</span>
+            <div class="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 min-w-[68px]">
+              <span id="cdSeconds" class="text-2xl md:text-3xl font-extrabold text-amber-300">30</span>
+              <span class="block text-[10px] uppercase tracking-wider text-rose-200 mt-0.5">Detik</span>
+            </div>
+          </div>
+          <a href="#katalog" class="mt-2 text-xs font-bold text-amber-300 hover:text-white underline underline-offset-4">
+            Lihat Produk Diskon Sekarang →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       KATALOG PRODUK (ECOMMERCE CATALOG SECTION)
+       ========================================================== -->
+  <section id="katalog" class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-rose-700 text-xs font-bold tracking-widest uppercase">Pilihan Terbaik Untukmu</span>
+        <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold text-neutral-900 mt-2 mb-3">
+          Katalog Produk Shofie Hijab
+        </h2>
+        <p class="text-neutral-500 text-sm">
+          Temukan varian hijab favoritmu mulai dari pashmina mewah, segi empat voal harian, hingga bergo instan praktis.
+        </p>
+      </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-stone-200/80 mb-8 space-y-4">
+        
+        <!-- Search & Sort Row -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          
+          <!-- Search input -->
+          <div class="relative w-full sm:max-w-md">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 text-sm"></i>
+            <input 
+              id="searchInput" 
+              type="text" 
+              placeholder="Cari nama hijab, bahan (contoh: voal, silk, bergo)..." 
+              class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-stone-200 text-xs md:text-sm focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700 bg-stone-50/50"
+            />
+          </div>
+
+          <!-- Sort Select -->
+          <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <span class="text-xs text-neutral-500 font-medium whitespace-nowrap">Urutkan:</span>
+            <select id="sortSelect" class="py-2.5 px-3 rounded-xl border border-stone-200 text-xs font-semibold text-neutral-700 bg-white focus:outline-none focus:border-rose-700">
+              <option value="popular">Terpopuler & Rekomendasi</option>
+              <option value="rating">Rating Tertinggi ★</option>
+              <option value="price-low">Harga: Rendah ke Tinggi</option>
+              <option value="price-high">Harga: Tinggi ke Rendah</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
+          <button type="button" class="filter-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap" data-category="all">
+            Semua Produk
+          </button>
+          <button type="button" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" data-category="pashmina">
+            Pashmina Series
+          </button>
+          <button type="button" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" data-category="segi-empat">
+            Segi Empat / Voal
+          </button>
+          <button type="button" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" data-category="bergo">
+            Bergo & Instan
+          </button>
+          <button type="button" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" data-category="syari">
+            Hijab Syar'i
+          </button>
+          <button type="button" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" data-category="aksesoris">
+            Ciput & Aksesoris
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Products Grid (Dynamically Populated by products.js & app.js) -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       CARA PEMESANAN VIA WHATSAPP (HOW TO ORDER)
+       ========================================================== -->
+  <section class="py-16 bg-white border-y border-stone-200/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-rose-700 text-xs font-bold tracking-widest uppercase">Sangat Mudah & Praktis</span>
+        <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold text-neutral-900 mt-2 mb-3">
+          4 Langkah Mudah Belanja via WhatsApp
+        </h2>
+        <p class="text-neutral-500 text-sm">
+          Nikmati pengalaman belanja personal dan aman bersama Customer Service kami yang ramah.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Step 1 -->
+        <div class="text-center p-6 rounded-2xl bg-stone-50 border border-stone-100 relative">
+          <div class="w-12 h-12 mx-auto rounded-full bg-rose-800 text-white font-serif-luxury text-xl font-bold flex items-center justify-center mb-4 shadow">
+            1
+          </div>
+          <h4 class="font-bold text-neutral-900 text-base mb-1.5">Pilih Hijab</h4>
+          <p class="text-neutral-500 text-xs leading-relaxed">
+            Pilih model hijab dan varian warna yang kamu sukai dari katalog di atas.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="text-center p-6 rounded-2xl bg-stone-50 border border-stone-100 relative">
+          <div class="w-12 h-12 mx-auto rounded-full bg-rose-800 text-white font-serif-luxury text-xl font-bold flex items-center justify-center mb-4 shadow">
+            2
+          </div>
+          <h4 class="font-bold text-neutral-900 text-base mb-1.5">Masukkan Keranjang</h4>
+          <p class="text-neutral-500 text-xs leading-relaxed">
+            Klik "+ Keranjang" atau "Beli via WA" untuk langsung menuju form data pengiriman.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="text-center p-6 rounded-2xl bg-stone-50 border border-stone-100 relative">
+          <div class="w-12 h-12 mx-auto rounded-full bg-rose-800 text-white font-serif-luxury text-xl font-bold flex items-center justify-center mb-4 shadow">
+            3
+          </div>
+          <h4 class="font-bold text-neutral-900 text-base mb-1.5">Kirim ke WhatsApp</h4>
+          <p class="text-neutral-500 text-xs leading-relaxed">
+            Klik tombol checkout WhatsApp. Format pesanan rapi akan terbuka otomatis ke chat Admin.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="text-center p-6 rounded-2xl bg-stone-50 border border-stone-100 relative">
+          <div class="w-12 h-12 mx-auto rounded-full bg-emerald-600 text-white font-serif-luxury text-xl font-bold flex items-center justify-center mb-4 shadow">
+            4
+          </div>
+          <h4 class="font-bold text-neutral-900 text-base mb-1.5">Konfirmasi & Kirim</h4>
+          <p class="text-neutral-500 text-xs leading-relaxed">
+            Admin memproses total ongkir & nomor resi. Paket cantik Shofie Hijab segera dikirim!
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       TESTIMONI PELANGGAN (REVIEWS)
+       ========================================================== -->
+  <section id="testimoni" class="py-16 md:py-24 bg-[#FCF9F7]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-rose-700 text-xs font-bold tracking-widest uppercase">Cerita Pelanggan</span>
+        <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold text-neutral-900 mt-2 mb-3">
+          Kata Mereka Tentang Shofie Hijab
+        </h2>
+        <p class="text-neutral-500 text-sm">
+          Lebih dari 50.000 wanita muslimah telah membuktikan kelembutan dan kenyamanan produk kami.
+        </p>
+      </div>
+
+      <!-- Testimonials Grid (Rendered dynamically) -->
+      <div id="testimonialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       FAQ (PERTANYAAN UMUM)
+       ========================================================== -->
+  <section id="faq" class="py-16 bg-white border-y border-stone-200/60">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-rose-700 text-xs font-bold tracking-widest uppercase">Bantuan & Informasi</span>
+        <h2 class="text-3xl md:text-4xl font-serif-luxury font-bold text-neutral-900 mt-2 mb-3">
+          Pertanyaan Yang Sering Diajukan
+        </h2>
+        <p class="text-neutral-500 text-sm">
+          Punya pertanyaan seputar pengiriman, bahan, atau sistem pembayaran? Temukan jawabannya di sini.
+        </p>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div id="faqsAccordion" class="space-y-4">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       RESELLER & DROPSHIP CALL TO ACTION BANNER
+       ========================================================== -->
+  <section class="py-14 bg-stone-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-rose-950 via-rose-900 to-stone-900 rounded-3xl p-8 md:p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
+        <div class="space-y-2 text-center lg:text-left">
+          <span class="px-3 py-1 rounded-full bg-amber-400 text-neutral-900 text-xs font-extrabold uppercase">Peluang Usaha Berkah</span>
+          <h3 class="text-2xl md:text-3xl font-serif-luxury font-bold">Gabung Jadi Reseller / Dropshipper Shofie Hijab</h3>
+          <p class="text-rose-200 text-xs md:text-sm max-w-xl">
+            Dapatkan harga khusus grosir mulai pembelian 10 pcs, foto katalog HD tanpa watermark untuk promosi, serta bimbingan penjualan.
+          </p>
+        </div>
+        <a 
+          href="https://wa.me/6281234567890?text=Halo%20Admin%20Shofie%20Hijab,%20saya%20berminat%20bergabung%20menjadi%20Reseller/Dropshipper" 
+          target="_blank" 
+          class="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-neutral-900 font-extrabold rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 text-sm whitespace-nowrap flex items-center gap-2">
+          <i class="fab fa-whatsapp text-lg"></i>
+          <span>Daftar Kemitraan Reseller</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       FOOTER
+       ========================================================== -->
+  <footer class="bg-stone-900 text-stone-300 pt-16 pb-12 border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-stone-800">
+        
+        <!-- Brand Info Column -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-rose-700 flex items-center justify-center text-white font-serif-luxury text-2xl font-bold">
+              S
+            </div>
+            <span class="font-serif-luxury text-2xl font-extrabold text-white">
+              Shofie<span class="text-rose-500">.</span>Hijab
+            </span>
+          </div>
+          <p class="text-xs text-stone-400 leading-relaxed max-w-sm">
+            Menghadirkan pesona busana muslimah yang anggun, santun, dan berkualitas premium dengan harga bersahabat. Setiap helai hijab dirancang dengan cinta untuk menemanimu di segala suasana.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-rose-700 text-stone-300 hover:text-white flex items-center justify-center text-sm transition" title="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-rose-700 text-stone-300 hover:text-white flex items-center justify-center text-sm transition" title="TikTok">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://wa.me/6281234567890" target="_blank" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-emerald-600 text-stone-300 hover:text-white flex items-center justify-center text-sm transition" title="WhatsApp CS">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="mailto:shofiehijab.id@gmail.com" class="w-9 h-9 rounded-full bg-stone-800 hover:bg-rose-700 text-stone-300 hover:text-white flex items-center justify-center text-sm transition" title="Email Kami">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Navigasi</h4>
+          <ul class="space-y-2.5 text-xs text-stone-400">
+            <li><a href="#beranda" class="hover:text-rose-400 transition">Beranda</a></li>
+            <li><a href="#keunggulan" class="hover:text-rose-400 transition">Keunggulan Kain</a></li>
+            <li><a href="#katalog" class="hover:text-rose-400 transition">Katalog Produk</a></li>
+            <li><a href="#flashsale" class="hover:text-rose-400 transition">Promo Flash Sale</a></li>
+            <li><a href="#testimoni" class="hover:text-rose-400 transition">Ulasan Pembeli</a></li>
+            <li><a href="#faq" class="hover:text-rose-400 transition">Pusat Bantuan</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Kategori Populer</h4>
+          <ul class="space-y-2.5 text-xs text-stone-400">
+            <li><a href="#katalog" onclick="activeCategory='pashmina'; renderProducts();" class="hover:text-rose-400 transition">Pashmina Silk Luxury</a></li>
+            <li><a href="#katalog" onclick="activeCategory='segi-empat'; renderProducts();" class="hover:text-rose-400 transition">Voal Paris Premium</a></li>
+            <li><a href="#katalog" onclick="activeCategory='bergo'; renderProducts();" class="hover:text-rose-400 transition">Bergo Maryam Daily</a></li>
+            <li><a href="#katalog" onclick="activeCategory='syari'; renderProducts();" class="hover:text-rose-400 transition">French Khimar Syar'i</a></li>
+            <li><a href="#katalog" onclick="activeCategory='aksesoris'; renderProducts();" class="hover:text-rose-400 transition">Ciput Ninja Rayon</a></li>
+          </ul>
+        </div>
+
+        <!-- Store Contact & Payment -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Layanan Toko</h4>
+          <ul class="space-y-3 text-xs text-stone-400">
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-map-marker-alt text-rose-500 mt-0.5"></i>
+              <span>Jl. Melati Hijab No. 88, Kemang, Jakarta Selatan</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fab fa-whatsapp text-emerald-500 mt-0.5"></i>
+              <span>WhatsApp: 0812-3456-7890</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fas fa-clock text-amber-500 mt-0.5"></i>
+              <span>Senin - Sabtu: 08.00 - 21.00 WIB</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar: Payments, Shipping, & Copyright -->
+      <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
+        <p>© 2026 <strong>Shofie Hijab</strong>. Hak Cipta Dilindungi Undang-Undang.</p>
+        
+        <!-- Payment & Courier Badges -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-2 py-1 rounded bg-stone-800 text-[11px] text-stone-300 font-bold">Transfer BCA</span>
+          <span class="px-2 py-1 rounded bg-stone-800 text-[11px] text-stone-300 font-bold">Mandiri</span>
+          <span class="px-2 py-1 rounded bg-stone-800 text-[11px] text-stone-300 font-bold">QRIS</span>
+          <span class="px-2 py-1 rounded bg-emerald-950 text-emerald-400 text-[11px] font-bold border border-emerald-800">Bisa COD</span>
+          <span class="px-2 py-1 rounded bg-stone-800 text-[11px] text-stone-300 font-bold">J&T / SiCepat / JNE</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==========================================================
+       CART SLIDE-OVER DRAWER
+       ========================================================== -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onclick="closeCartDrawer()"></div>
+
+  <div id="cartDrawer" class="cart-drawer fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 shadow-2xl flex flex-col">
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-shopping-bag text-rose-800"></i>
+        <h3 class="font-serif-luxury font-bold text-xl text-neutral-900">Keranjang Belanja</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="w-8 h-8 rounded-full hover:bg-stone-200 text-neutral-500 flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div id="cartEmptyState" class="hidden flex-1 flex flex-col items-center justify-center p-8 text-center">
+      <div class="w-20 h-20 rounded-full bg-rose-50 text-rose-400 flex items-center justify-center text-3xl mb-4">
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+      <h4 class="font-serif-luxury font-bold text-lg text-neutral-800 mb-1">Keranjang Masih Kosong</h4>
+      <p class="text-xs text-neutral-500 max-w-xs mb-6">Kamu belum menambahkan hijab impianmu ke keranjang belanja.</p>
+      <button onclick="closeCartDrawer()" class="px-6 py-2.5 bg-rose-800 text-white rounded-xl text-xs font-bold hover:bg-rose-900 transition">
+        Mulai Belanja Sekarang
+      </button>
+    </div>
+
+    <!-- Items List -->
+    <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 divide-y divide-stone-100">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div id="cartDrawerFooter" class="p-5 border-t border-stone-200 bg-stone-50 space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-neutral-500 font-medium">Subtotal Produk:</span>
+        <span id="cartDrawerSubtotal" class="text-base font-extrabold text-rose-800">Rp 0</span>
+      </div>
+      <p class="text-[11px] text-neutral-400">Ongkir akan dihitung otomatis saat konfirmasi via WhatsApp.</p>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="clearCart()" class="py-3 px-3 rounded-xl border border-stone-300 hover:bg-stone-200 text-neutral-700 text-xs font-semibold transition">
+          Kosongkan
+        </button>
+        <button onclick="openCartCheckout()" class="py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 transition">
+          <i class="fab fa-whatsapp text-sm"></i>
+          <span>Checkout WA</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       QUICK VIEW PRODUCT MODAL
+       ========================================================== -->
+  <div id="quickViewModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-content relative bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close button -->
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-neutral-600 hover:text-black shadow flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Modal Content Body -->
+      <div id="quickViewContent">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       CHECKOUT & WHATSAPP CONFIRMATION MODAL
+       ========================================================== -->
+  <div id="checkoutModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-content relative bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl max-h-[94vh] flex flex-col">
+      
+      <!-- Header -->
+      <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50 flex-shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <i class="fab fa-whatsapp text-lg"></i>
+          </div>
+          <div>
+            <h3 class="font-serif-luxury font-bold text-lg md:text-xl text-neutral-900 leading-tight">Konfirmasi Pemesanan WhatsApp</h3>
+            <p class="text-[11px] text-neutral-500">Lengkapi data agar pesanan langsung disiapkan oleh Admin</p>
+          </div>
+        </div>
+        <button onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full hover:bg-stone-200 text-neutral-500 flex items-center justify-center transition">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Form Body -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6">
+        
+        <!-- Summary Box -->
+        <div class="bg-stone-50 rounded-2xl p-4 border border-stone-200/80">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-2">Ringkasan Pesanan:</h4>
+          <div id="checkoutProductsList" class="space-y-1 mb-3">
+            <!-- Injected by JavaScript -->
+          </div>
+
+          <!-- Coupon Code Input -->
+          <div class="flex gap-2 pt-2 border-t border-stone-200 mb-2">
+            <input 
+              id="couponInput" 
+              type="text" 
+              placeholder="Kode promo (contoh: SHOFIEBARU)" 
+              class="flex-1 px-3 py-2 text-xs rounded-xl border border-stone-300 focus:outline-none focus:border-rose-700 uppercase"
+            />
+            <button 
+              type="button" 
+              onclick="applyCoupon()" 
+              class="px-4 py-2 bg-neutral-800 hover:bg-neutral-900 text-white rounded-xl text-xs font-bold transition">
+              Terapkan
+            </button>
+          </div>
+          <div id="couponNotice"></div>
+
+          <!-- Totals calculation -->
+          <div class="pt-3 border-t border-stone-200 space-y-1 text-xs">
+            <div class="flex justify-between text-neutral-600">
+              <span>Subtotal:</span>
+              <span id="checkoutSubtotal">Rp 0</span>
+            </div>
+            <div class="flex justify-between text-emerald-700 font-semibold">
+              <span>Potongan Diskon:</span>
+              <span id="checkoutDiscount">Rp 0</span>
+            </div>
+            <div class="flex justify-between text-sm font-extrabold text-neutral-900 pt-1 border-t border-dashed border-stone-200">
+              <span>Estimasi Total:</span>
+              <span id="checkoutGrandTotal" class="text-rose-800">Rp 0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Data Form -->
+        <form id="orderForm" onsubmit="submitWhatsAppOrder(event)" class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-800 flex items-center gap-1.5">
+            <i class="fas fa-user-edit text-rose-800"></i> Data Penerima Paket
+          </h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-neutral-700 mb-1">Nama Lengkap *</label>
+              <input 
+                id="customerName" 
+                type="text" 
+                required 
+                placeholder="cth: Siti Nurhaliza" 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-neutral-700 mb-1">Nomor WhatsApp Aktif *</label>
+              <input 
+                id="customerPhone" 
+                type="tel" 
+                required 
+                placeholder="cth: 081234567890" 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-neutral-700 mb-1">Alamat Lengkap Pengiriman *</label>
+            <textarea 
+              id="customerAddress" 
+              rows="2" 
+              required 
+              placeholder="cth: Jl. Mawar No. 12 RT 03/05, Kec. Tebet, Jakarta Selatan (Kode Pos 12810)" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700 focus:ring-1 focus:ring-rose-700"
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-neutral-700 mb-1">Pilihan Ekspedisi Kurir</label>
+              <select id="customerCourier" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700">
+                <option value="J&T Express (Rekomendasi Cepat)">J&T Express (Rekomendasi Cepat)</option>
+                <option value="SiCepat Halu / Reguler">SiCepat Halu / Reguler</option>
+                <option value="JNE Reguler / YES">JNE Reguler / YES</option>
+                <option value="Ninja Xpress">Ninja Xpress</option>
+                <option value="Gosend / Grab (Instant / Sameday Jabodetabek)">Gosend / Grab (Sameday/Instant)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-neutral-700 mb-1">Metode Pembayaran</label>
+              <select id="customerPayment" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700">
+                <option value="Transfer BCA">Transfer Bank BCA</option>
+                <option value="Transfer Mandiri">Transfer Bank Mandiri</option>
+                <option value="Transfer BRI">Transfer Bank BRI</option>
+                <option value="Transfer BSI (Bank Syariah Indonesia)">Transfer BSI (Bank Syariah)</option>
+                <option value="QRIS (Gopay/OVO/ShopeePay/Dana)">QRIS (Semua E-Wallet & M-Banking)</option>
+                <option value="COD (Bayar Tunai di Tempat)">COD (Bayar Tunai saat Kurir Sampai)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-neutral-700 mb-1">Catatan Tambahan (Opsional)</label>
+            <input 
+              id="customerNotes" 
+              type="text" 
+              placeholder="cth: Tolong sertakan greeting card untuk kado ultah ya kak" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-rose-700"
+            />
+          </div>
+
+          <!-- Live WhatsApp Message Preview Accordion -->
+          <div class="pt-2">
+            <details class="text-xs bg-stone-50 rounded-xl border border-stone-200 p-3">
+              <summary class="font-bold text-neutral-700 cursor-pointer flex items-center justify-between">
+                <span>👁️ Lihat Preview Format Chat WhatsApp</span>
+                <span class="text-[11px] text-neutral-400 font-normal">(Otomatis Terbentuk)</span>
+              </summary>
+              <pre id="waMessagePreview" class="mt-3 p-3 bg-white rounded-lg border border-stone-200 text-[11px] text-neutral-700 whitespace-pre-wrap font-mono leading-relaxed max-h-40 overflow-y-auto"></pre>
+            </details>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-3">
+            <button 
+              type="submit" 
+              class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-600/30 transition-all hover:scale-[1.01] active:scale-95">
+              <i class="fab fa-whatsapp text-xl"></i>
+              <span>Kirim Pesanan ke WhatsApp Sekarang</span>
+            </button>
+            <p class="text-center text-[11px] text-neutral-400 mt-2">
+              🔒 Aman & Bebas Biaya Admin • Terhubung langsung dengan Official WhatsApp CS Shofie Hijab
+            </p>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       FLOATING WHATSAPP BUTTON WITH PULSE EFFECT
+       ========================================================== -->
+  <div class="wa-float">
+    <div class="wa-tooltip hidden sm:flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+      <span>Ada yang ingin ditanyakan? Chat kami yuk!</span>
+    </div>
+    <a 
+      href="https://wa.me/6281234567890?text=Halo%20Admin%20Shofie%20Hijab!%20Saya%20tertarik%20dengan%20koleksi%20hijab%20di%20website%20dan%20ingin%20tanya%20detail" 
+      target="_blank" 
+      class="wa-btn" 
+      title="Hubungi Admin Shofie Hijab via WhatsApp">
+      <div class="wa-pulse"></div>
+      <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+  </div>
+
+  <!-- ==========================================================
+       LIVE SALES POPUP TOAST (SOCIAL PROOF SIMULATION)
+       ========================================================== -->
+  <div id="livePurchaseToast" class="live-toast">
+    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0 text-sm">
+      <i class="fas fa-bag-shopping"></i>
+    </div>
+    <div class="text-xs">
+      <p class="font-bold text-neutral-900" id="liveToastBuyer">Dewi Safitri (Surabaya)</p>
+      <p class="text-neutral-500 text-[11px]">Membeli <span class="font-semibold text-rose-800" id="liveToastProduct">Pashmina Silk Shimmer</span></p>
+      <span class="text-[10px] text-neutral-400 flex items-center gap-1 mt-0.5" id="liveToastTime">
+        <i class="fas fa-clock text-[9px]"></i> Baru saja memesan
+      </span>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       NOTIFICATION SNACKBAR TOAST
+       ========================================================== -->
+  <div id="notificationToast" class="fixed top-6 right-6 z-50 bg-neutral-900/95 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-none max-w-sm">
+    <div class="w-6 h-6 rounded-full bg-emerald-500 text-neutral-900 flex items-center justify-center text-xs font-bold flex-shrink-0">
+      <i class="fas fa-check"></i>
+    </div>
+    <span id="toastMessageText" class="text-xs font-medium">Notifikasi</span>
+  </div>
+
+  <!-- ==========================================================
+       SCRIPTS
+       ========================================================== -->
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+
