@@ -1,10 +1,58 @@
-# 🧕 Shofie Hijab - E-Commerce Landing Page
+# 🧕 Shofie Hijab - E-Commerce Landing Page & Dashboard Admin
 
-Website Landing Page & Toko Online modern dan elegan untuk brand hijab **Shofie Hijab**. Dilengkapi dengan katalog produk interaktif, fitur keranjang belanja (*shopping cart*), filter & pencarian, kalkulasi diskon otomatis, serta sistem konfirmasi checkout yang terhubung langsung ke **WhatsApp Admin**.
+Website Toko Online modern dan elegan untuk brand hijab **Shofie Hijab**. Dilengkapi dengan katalog produk interaktif, keranjang belanja (*shopping cart*), konfirmasi pesanan terhubung ke **WhatsApp**, serta **Dashboard Admin Lengkap (CMS)** untuk mengelola produk, analitik pengunjung harian, dan mengedit konten website secara langsung.
 
 ---
 
-## ✨ Fitur Utama
+## 👑 Dashboard Admin & CMS (`admin.html`)
+
+Akses Dashboard Admin dengan membuka [admin.html](file:///c:/Users/HP/Documents/belajarr/shofie%20hijab/admin.html) atau mengklik tombol **"Login Admin"** di navigasi / footer website.
+
+### 🔑 Kredensial Login Default:
+- **Username**: `admin`
+- **Password**: `shofie123`
+*(Kredensial dapat diubah kapan saja melalui menu Pengaturan Akun di dalam Dashboard Admin)*
+
+### 🚀 Fitur Dashboard Admin:
+1. **Ringkasan & Analitik (Overview)**:
+   - Jumlah Pengunjung Hari Ini & Pertumbuhan vs Hari Kemarin.
+   - Total Tayangan Halaman (*Page Views*).
+   - Total Produk Aktif di Etalase.
+   - Jumlah Pesanan Masuk via WhatsApp & Estimasi Omset Penjualan.
+   - **Grafik Tren Pengunjung 7 Hari Terakhir** (*Chart.js line chart*).
+   - **Grafik Donat Sebaran Kategori Produk** (Pashmina, Voal, Bergo, Syar'i, Aksesoris).
+   - Pratinjau Pesanan WhatsApp Terbaru.
+
+2. **Kelola Produk (CRUD Lengkap)**:
+   - **Tambah Produk Baru**: Form input nama produk, kategori, harga diskon, harga coret, badge (Best Seller, New Arrival, dll.), material kain, ukuran dimensi, URL foto produk, varian warna, dan deskripsi.
+   - **Edit Produk**: Perbarui harga, nama, deskripsi, atau foto produk kapan saja.
+   - **Hapus Produk**: Hapus item dari etalase dengan dialog konfirmasi aman.
+   - **Reset ke Katalog Awal**: Tombol satu-klik untuk mengembalikan 12 produk bawaan awal.
+   - Sinkronisasi instan dengan halaman depan toko (*localStorage*).
+
+3. **Editor Konten Website Langsung (Live CMS)**:
+   Admin dapat mengubah isi website tanpa menyentuh kode program:
+   - **Bar Pengumuman Promo**: Ubah teks banner promo, kode voucher promo (`SHOFIEBARU`), dan nominal diskon (Rp).
+   - **Hero Banner**: Ubah teks headline utama, subheadline, teks tombol CTA, dan URL foto model hero.
+   - **Kontak Pemesanan WhatsApp**: Ubah nomor WhatsApp admin (otomatis mengubah nomor tujuan semua tombol checkout dan floating WA).
+   - **Informasi Toko**: Ubah nama brand, alamat toko, jam buka operasional, link Instagram, dan TikTok.
+   - Tombol **"Simpan Perubahan Konten"** langsung memperbarui tampilan website publik.
+   - Tombol **"Reset Teks ke Default"** jika ingin mengembalikan kalimat awal.
+
+4. **Riwayat Pesanan WhatsApp**:
+   - Setiap pengunjung yang mengisi data dan mengklik *Kirim Pesanan ke WhatsApp* akan otomatis tercatat di tabel riwayat.
+   - Menampilkan tanggal, nama pembeli, nomor WhatsApp (dapat diklik langsung untuk chat), rincian produk, ekspedisi, metode pembayaran, dan total belanja.
+   - Pengelola bisa mengubah status pesanan (*Menunggu Konfirmasi*, *Diproses*, *Selesai*).
+
+5. **Laporan Pengunjung Harian (Analytics)**:
+   - Pelacak pengunjung harian dan total *pageviews* otomatis.
+   - Rasio perangkat pengunjung (Smartphone Mobile vs Laptop Desktop).
+   - Metode pembayaran terfavorit.
+   - Tabel riwayat kunjungan 14 hari terakhir lengkap dengan tingkat konversi pesanan.
+
+---
+
+## 🛍️ Fitur Website Publik Pengunjung (`index.html`)
 
 1. **Desain Modern & Aesthetic Muslimah**:
    - Palette warna *Rose Gold*, *Warm Taupe*, *Dusty Pink*, dan *Champagne*.
@@ -12,39 +60,27 @@ Website Landing Page & Toko Online modern dan elegan untuk brand hijab **Shofie 
    - Sepenuhnya responsif untuk smartphone, tablet, maupun layar desktop.
 
 2. **Katalog Produk & Filter Kategori**:
-   - Filter cepat berdasarkan kategori:
-     - *Semua Produk*
-     - *Pashmina Series* (Silk Shimmer, Ceruty Babydoll, Kaos Modal)
-     - *Segi Empat / Voal* (Paris Premium, Ultrafine Laser Cut, Voal Motif)
-     - *Bergo & Instan* (Maryam Diamond, Jersey Sport)
-     - *Hijab Syar'i* (French Khimar 2in1, Segi Empat Jumbo)
-     - *Ciput & Aksesoris* (Ciput Ninja Rayon, Scrunchie Sutra)
-   - Kolom pencarian produk secara langsung (*real-time search*).
-   - Pengurutan produk (*Sorting*) berdasarkan: Terpopuler, Rating Tertinggi, Harga Terendah & Tertinggi.
+   - Filter cepat kategori: Pashmina, Segi Empat / Voal, Bergo & Instan, Syar'i, Aksesoris.
+   - Pencarian produk real-time (*live search*).
+   - Sorting berdasarkan: Terpopuler, Rating Tertinggi, Harga Terendah & Tertinggi.
 
 3. **Detail Produk (Quick View Modal)**:
-   - Preview foto produk resolusi tinggi.
-   - Pilihan varian warna dengan color swatch interaktif.
-   - Penjelasan bahan (*material*), ukuran dimensi (*size*), dan karakteristik kain.
-   - Pengatur jumlah pembelian (+ / -).
+   - Preview foto produk HD, swatches warna interaktif, spesifikasi bahan, dan selektor kuantitas.
 
 4. **Keranjang Belanja Interaktif (Slide-Over Drawer)**:
-   - Keranjang belanja geser dari sisi kanan layar.
-   - Manajemen produk (tambah, kurangi kuantitas, hapus item).
-   - Otomatis tersimpan di memori browser (*localStorage*).
+   - Slide-over drawer dari samping kanan layar, perhitungan subtotal belanja, dan penyimpanan di memori browser.
 
-5. **Sistem Pemesanan Terhubung ke WhatsApp (WA Checkout)**:
-   - Form data pemesan: Nama, Nomor WhatsApp, Alamat Pengiriman, Pilihan Kurir (J&T, SiCepat, JNE, Gosend, dll.), Metode Pembayaran (Transfer Bank BCA/Mandiri/BRI/BSI, QRIS, COD), dan Catatan Khusus.
-   - Fitur Kupon Promo (Contoh: kode `SHOFIEBARU` untuk potongan Rp 10.000).
-   - **Live Preview Format WhatsApp**: Pemesan dapat melihat langsung draft pesan yang akan dikirimkan.
-   - Format pesan WhatsApp rapi, lengkap dengan nama produk, varian warna, subtotal harga, dan data penerima paket.
+5. **Sistem Pemesanan WhatsApp Otomatis**:
+   - Form data pemesan: Nama, No. WA, Alamat Lengkap, Pilihan Kurir (J&T, SiCepat, JNE, Gosend), Metode Pembayaran (Transfer Bank BCA/Mandiri/BRI/BSI, QRIS, COD).
+   - Fitur Kupon Promo (Kode `SHOFIEBARU`).
+   - *Live Preview* format chat WhatsApp sebelum dikirim.
+   - Format pesan WhatsApp rapi dan detail saat diklik.
 
-6. **Fitur Pendukung Penjualan (Conversion Boosters)**:
-   - **Floating WhatsApp Button** dengan animasi denyut (*pulse effect*) untuk konsultasi cepat dengan CS.
-   - **Flash Sale Banner** dengan hitung mundur (*countdown timer*).
-   - **Live Purchase Notification Toast**: Simulasi pop-up pesanan terbaru untuk meningkatkan kepercayaan calon pembeli (*social proof*).
-   - **Ulasan & Testimoni Pelanggan** berbintang 5.
-   - **FAQ Interaktif** (Accordion buka-tutup) untuk menjawab pertanyaan seputar bahan, pengiriman, dan garansi.
+6. **Conversion Boosters**:
+   - Floating WhatsApp button dengan animasi pulse glow.
+   - Flash Sale banner dengan countdown timer aktif.
+   - Live Purchase Notification toast simulation (*social proof*).
+   - Testimoni pelanggan bintang 5 & FAQ interaktif.
 
 ---
 
@@ -53,72 +89,22 @@ Website Landing Page & Toko Online modern dan elegan untuk brand hijab **Shofie 
 ```
 shofie-hijab/
 │
-├── index.html          # Halaman utama landing page & seluruh struktur UI
+├── index.html          # Halaman depan toko & katalog untuk pembeli
+├── admin.html          # Dashboard Admin, Login, Analytics & CMS Editor
 ├── css/
 │   └── style.css       # Styling kustom, animasi, font, dan elemen visual
 ├── js/
-│   ├── products.js     # Data katalog produk, testimoni, dan FAQ
-│   └── app.js          # Logika aplikasi (keranjang, filter, pesan WhatsApp, modal)
-└── README.md           # Panduan penggunaan & kustomisasi
+│   ├── products.js     # Data katalog awal produk, testimoni, dan FAQ
+│   ├── app.js          # Logika frontend toko, keranjang, order WhatsApp, tracker
+│   └── admin.js        # Logika login admin, CRUD produk, CMS editor, Chart.js
+├── .gitignore          # File ignore Git
+└── README.md           # Panduan lengkap penggunaan & dokumentasi
 ```
 
 ---
 
-## 🚀 Cara Menjalankan Website
+## 🚀 Cara Menjalankan
 
-Website ini dibuat menggunakan HTML, CSS kustom + Tailwind CSS CDN, dan Vanilla JavaScript murni, sehingga **tidak memerlukan instalasi compiler atau dependencies yang rumit**.
-
-### Cara 1: Buka Langsung di Browser
-Cukup klik ganda (double click) file `index.html` di komputer Anda, atau klik kanan lalu pilih **Open With** -> **Google Chrome / Microsoft Edge / Mozilla Firefox**.
-
-### Cara 2: Menggunakan VS Code Live Server (Rekomendasi)
-1. Buka folder `shofie hijab` di VS Code.
-2. Klik kanan file `index.html` dan pilih **Open with Live Server**.
-3. Website akan otomatis terbuka di browser Anda pada alamat `http://127.0.0.1:5500`.
-
----
-
-## ⚙️ Cara Mengubah Nomor WhatsApp & Pengaturan Toko
-
-Untuk mengganti nomor WhatsApp tujuan konfirmasi pemesanan:
-
-1. Buka file [js/app.js](file:///c:/Users/HP/Documents/belajarr/shofie%20hijab/js/app.js#L7-L18):
-```javascript
-const STORE_CONFIG = {
-  name: "Shofie Hijab",
-  tagline: "Elegansi Muslimah Masa Kini",
-  whatsappNumber: "6281234567890", // Ganti dengan nomor WhatsApp aktif toko Anda (gunakan awalan 62)
-  instagram: "@shofiehijab.official",
-  ...
-};
-```
-2. Ganti juga tautan WhatsApp pada [index.html](file:///c:/Users/HP/Documents/belajarr/shofie%20hijab/index.html) jika ingin menyesuaikan nomor pada tombol konsultasi di header dan floating button.
-
----
-
-## 🛍️ Cara Menambah atau Mengubah Produk
-
-Buka file [js/products.js](file:///c:/Users/HP/Documents/belajarr/shofie%20hijab/js/products.js). Setiap produk memiliki format data berikut:
-
-```javascript
-{
-  id: 13,
-  name: "Nama Hijab Baru",
-  category: "pashmina", // pashmina | segi-empat | bergo | syari | aksesoris
-  price: 55000,
-  originalPrice: 75000,
-  rating: 4.9,
-  soldCount: "1.2k",
-  badge: "New Arrival",
-  material: "Katun Voal Premium",
-  size: "115 cm x 115 cm",
-  image: "URL_FOTO_PRODUK",
-  description: "Deskripsi keunggulan hijab...",
-  colors: [
-    { name: "Dusty Mauve", hex: "#BDA3A7" },
-    { name: "Oat Latte", hex: "#F3EDE2" }
-  ]
-}
-```
-Simpan file, dan produk baru akan langsung muncul di katalog secara otomatis!
-
+Website ini murni berbasis HTML5, CSS kustom + Tailwind CSS CDN, dan Vanilla JavaScript:
+1. Buka file `index.html` langsung di browser untuk melihat tampilan toko.
+2. Buka file `admin.html` (atau klik tombol **Login Admin** di pojok kanan atas / footer) untuk masuk ke panel admin dengan username `admin` dan password `shofie123`.

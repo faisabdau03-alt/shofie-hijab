@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin - Shofie Hijab</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#FDF7F6',
+              100: '#FBEFEF',
+              500: '#C97D73',
+              700: '#9C5248',
+              800: '#83423A',
+              900: '#6C3630',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-serif-luxury {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f5f0ec;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbb4ab;
+      border-radius: 4px;
+    }
+    .nav-tab.active {
+      background-color: #9C5248;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .modal-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box {
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+    .modal-overlay.active .modal-box {
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body class="bg-stone-100 text-stone-800 antialiased min-h-screen">
+
+  <!-- ==========================================================
+       LOGIN SCREEN OVERLAY (Shown if not authenticated)
+       ========================================================== -->
+  <div id="loginScreen" class="fixed inset-0 z-50 bg-stone-900/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 md:p-10 border border-stone-200 text-center relative overflow-hidden">
+      <!-- Decorative background accent -->
+      <div class="absolute -top-16 -right-16 w-36 h-36 bg-rose-100 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Brand Logo -->
+      <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-rose-800 to-rose-600 text-white flex items-center justify-center text-3xl font-serif-luxury font-bold shadow-lg shadow-rose-900/20">
+        S
+      </div>
+
+      <h2 class="text-2xl font-serif-luxury font-bold text-stone-900">Admin Shofie Hijab</h2>
+      <p class="text-xs text-stone-500 mt-1 mb-6">Masuk untuk mengelola produk, analitik, dan isi website</p>
+
+      <!-- Alert Message Box -->
+      <div id="loginAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800 text-left"></div>
+
+      <!-- Login Form -->
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Username Admin</label>
+          <div class="relative">
+            <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+            <input 
+              id="adminUsername" 
+              type="text" 
+              required 
+              placeholder="Username" 
+              class="w-full pl-10 pr-4 py-3 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800 focus:ring-1 focus:ring-rose-800"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Kata Sandi (Password)</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+            <input 
+              id="adminPassword" 
+              type="password" 
+              required 
+              placeholder="Password" 
+              class="w-full pl-10 pr-10 py-3 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800 focus:ring-1 focus:ring-rose-800"
+            />
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs">
+              <i id="togglePwdIcon" class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200/80 text-[11px] text-amber-900 leading-relaxed">
+          <div class="font-bold flex items-center gap-1.5 mb-1">
+            <i class="fas fa-key text-amber-600"></i> Akun Login Default:
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-stone-700">
+            <div>Username: <strong class="text-stone-900 font-mono">admin</strong></div>
+            <div>Password: <strong class="text-stone-900 font-mono">shofie123</strong></div>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 bg-rose-800 hover:bg-rose-900 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-rose-900/20 transition active:scale-95 flex items-center justify-center gap-2">
+          <i class="fas fa-arrow-right-to-bracket"></i>
+          <span>Masuk ke Dashboard</span>
+        </button>
+
+        <div class="text-center pt-2">
+          <a href="index.html" class="text-xs text-stone-500 hover:text-rose-800 font-medium">
+            ← Kembali ke Website Utama
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       MAIN ADMIN LAYOUT
+       ========================================================== -->
+  <div id="adminLayout" class="hidden min-h-screen flex flex-col lg:flex-row">
+
+    <!-- SIDEBAR -->
+    <aside class="w-full lg:w-64 bg-stone-900 text-stone-200 flex flex-col flex-shrink-0 border-r border-stone-800">
+      
+      <!-- Top Brand -->
+      <div class="p-6 border-b border-stone-800 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-700 to-rose-500 flex items-center justify-center text-white font-serif-luxury font-bold text-xl shadow">
+            S
+          </div>
+          <div>
+            <h1 class="font-serif-luxury font-bold text-xl text-white tracking-wide">Shofie Hijab</h1>
+            <p class="text-[10px] text-stone-400 uppercase tracking-widest font-semibold">Admin Panel</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+        
+        <button onclick="switchTab('overview')" id="tabBtn-overview" class="nav-tab active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fas fa-chart-pie w-4 text-center"></i>
+          <span>Ringkasan & Analitik</span>
+        </button>
+
+        <button onclick="switchTab('products')" id="tabBtn-products" class="nav-tab w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fas fa-boxes-stacked w-4 text-center"></i>
+          <span>Kelola Produk</span>
+          <span id="sidebarProductCount" class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-stone-800 font-bold">12</span>
+        </button>
+
+        <button onclick="switchTab('siteContent')" id="tabBtn-siteContent" class="nav-tab w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fas fa-pen-to-square w-4 text-center"></i>
+          <span>Edit Isi Website (CMS)</span>
+        </button>
+
+        <button onclick="switchTab('orders')" id="tabBtn-orders" class="nav-tab w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fab fa-whatsapp w-4 text-center text-emerald-400"></i>
+          <span>Riwayat Pesanan WA</span>
+          <span id="sidebarOrderCount" class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 font-bold">0</span>
+        </button>
+
+        <button onclick="switchTab('analytics')" id="tabBtn-analytics" class="nav-tab w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fas fa-users-line w-4 text-center"></i>
+          <span>Pengunjung Harian</span>
+        </button>
+
+        <button onclick="switchTab('settings')" id="tabBtn-settings" class="nav-tab w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-stone-300 hover:bg-stone-800 hover:text-white transition">
+          <i class="fas fa-gear w-4 text-center"></i>
+          <span>Pengaturan Akun</span>
+        </button>
+
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="p-4 border-t border-stone-800 space-y-2">
+        <a href="index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-semibold transition">
+          <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+          <span>Lihat Website Toko</span>
+        </a>
+        <button onclick="handleAdminLogout()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-rose-400 hover:bg-rose-950/40 text-xs font-semibold transition">
+          <i class="fas fa-power-off"></i>
+          <span>Keluar (Logout)</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col min-w-0 bg-[#F8F5F2]">
+      
+      <!-- Top Bar -->
+      <header class="bg-white border-b border-stone-200/80 px-6 py-4 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+        <div class="flex items-center gap-3">
+          <h2 id="pageTitle" class="text-lg md:text-xl font-serif-luxury font-bold text-stone-900">
+            Ringkasan & Analitik
+          </h2>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-right hidden sm:block">
+            <span class="block text-xs font-bold text-stone-900" id="topAdminName">Administrator</span>
+            <span class="block text-[10px] text-emerald-600 font-semibold flex items-center gap-1 justify-end">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Sesi Aktif
+            </span>
+          </div>
+          <div class="w-9 h-9 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-xs">
+            AD
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Views Wrapper -->
+      <div class="p-6 md:p-8 flex-1 overflow-y-auto space-y-8">
+        
+        <!-- ====================================================
+             TAB 1: OVERVIEW & ANALYTICS SUMMARY
+             ==================================================== -->
+        <section id="view-overview" class="space-y-8">
+          
+          <!-- Quick Stat KPI Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Card 1: Daily Visitors -->
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Pengunjung Hari Ini</p>
+                <h3 id="statTodayVisitors" class="text-2xl font-extrabold text-stone-900 mt-1">0</h3>
+                <span class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-1">
+                  <i class="fas fa-arrow-trend-up"></i> <span id="statVisitorGrowth">+12%</span> vs kemarin
+                </span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                <i class="fas fa-eye"></i>
+              </div>
+            </div>
+
+            <!-- Card 2: Total Page Views -->
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Total Tayangan Halaman</p>
+                <h3 id="statTotalPageviews" class="text-2xl font-extrabold text-stone-900 mt-1">0</h3>
+                <span class="text-[11px] text-stone-400 font-medium mt-1 block">Akumulasi pengunjung</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+
+            <!-- Card 3: Total Products -->
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Total Produk Aktif</p>
+                <h3 id="statActiveProducts" class="text-2xl font-extrabold text-stone-900 mt-1">0</h3>
+                <span class="text-[11px] text-rose-700 font-semibold mt-1 block">Di katalog toko</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center text-xl">
+                <i class="fas fa-shirt"></i>
+              </div>
+            </div>
+
+            <!-- Card 4: WhatsApp Orders -->
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Pesanan WhatsApp</p>
+                <h3 id="statWaOrders" class="text-2xl font-extrabold text-stone-900 mt-1">0</h3>
+                <span id="statEstimatedRevenue" class="text-[11px] text-emerald-600 font-semibold mt-1 block">Estimasi Rp 0</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Charts Row -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Chart: Visitors Trend 7 Days -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="font-serif-luxury font-bold text-lg text-stone-900">Tren Pengunjung 7 Hari Terakhir</h3>
+                  <p class="text-xs text-stone-500">Statistik pengunjung harian dan total tayangan halaman</p>
+                </div>
+                <span class="text-xs px-2.5 py-1 bg-stone-100 rounded-lg text-stone-600 font-semibold">Real-time</span>
+              </div>
+              <div class="relative h-64 w-full">
+                <canvas id="visitorsChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Right Chart: Category Distribution -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+              <div>
+                <h3 class="font-serif-luxury font-bold text-lg text-stone-900 mb-1">Sebaran Kategori Produk</h3>
+                <p class="text-xs text-stone-500 mb-4">Proporsi produk yang aktif di etalase</p>
+                <div class="relative h-52 w-full flex items-center justify-center">
+                  <canvas id="categoryChart"></canvas>
+                </div>
+              </div>
+              <div id="categoryChartLegend" class="grid grid-cols-2 gap-2 pt-4 border-t border-stone-100 text-[11px]"></div>
+            </div>
+
+          </div>
+
+          <!-- Recent Activity & Quick Actions -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Recent Orders Table Preview -->
+            <div class="lg:col-span-2 bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+              <div class="p-5 border-b border-stone-100 flex items-center justify-between">
+                <div>
+                  <h3 class="font-serif-luxury font-bold text-base text-stone-900">Pesanan WhatsApp Terbaru</h3>
+                  <p class="text-xs text-stone-500">Pelanggan yang mengklik konfirmasi via WhatsApp</p>
+                </div>
+                <button onclick="switchTab('orders')" class="text-xs text-rose-800 font-bold hover:underline">
+                  Lihat Semua →
+                </button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200">
+                    <tr>
+                      <th class="p-3.5">Waktu</th>
+                      <th class="p-3.5">Nama Pemesan</th>
+                      <th class="p-3.5">Produk</th>
+                      <th class="p-3.5">Total Belanja</th>
+                      <th class="p-3.5 text-right">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewRecentOrdersBody" class="divide-y divide-stone-100">
+                    <!-- Injected by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Quick Site Manager Widget -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <h3 class="font-serif-luxury font-bold text-base text-stone-900">Aksi Cepat Pengelola</h3>
+              
+              <button onclick="openProductModal()" class="w-full p-3.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold flex items-center gap-3 transition">
+                <i class="fas fa-plus-circle text-base"></i>
+                <div class="text-left">
+                  <div>Tambah Produk Baru</div>
+                  <div class="text-[10px] text-rose-600 font-normal">Masukkan varian hijab ke katalog</div>
+                </div>
+              </button>
+
+              <button onclick="switchTab('siteContent')" class="w-full p-3.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold flex items-center gap-3 transition">
+                <i class="fas fa-bullhorn text-base"></i>
+                <div class="text-left">
+                  <div>Ubah Banner & Promo</div>
+                  <div class="text-[10px] text-amber-600 font-normal">Ganti voucher & teks promo utama</div>
+                </div>
+              </button>
+
+              <button onclick="switchTab('siteContent')" class="w-full p-3.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-3 transition">
+                <i class="fab fa-whatsapp text-base"></i>
+                <div class="text-left">
+                  <div>Ganti No. WhatsApp Toko</div>
+                  <div class="text-[10px] text-emerald-600 font-normal">Sesuaikan kontak CS pemesanan</div>
+                </div>
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ====================================================
+             TAB 2: KELOLA PRODUK (CRUD)
+             ==================================================== -->
+        <section id="view-products" class="hidden space-y-6">
+          
+          <!-- Products Toolbar -->
+          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Search & Filter -->
+            <div class="flex items-center gap-3 w-full md:w-auto flex-1">
+              <div class="relative flex-1 max-w-sm">
+                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                <input 
+                  id="adminProductSearch" 
+                  type="text" 
+                  placeholder="Cari nama produk..." 
+                  class="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800"
+                  oninput="handleAdminProductFilter()"
+                />
+              </div>
+
+              <select id="adminCategoryFilter" onchange="handleAdminProductFilter()" class="py-2.5 px-3 text-xs rounded-xl border border-stone-200 bg-white text-stone-700 font-medium focus:outline-none focus:border-rose-800">
+                <option value="all">Semua Kategori</option>
+                <option value="pashmina">Pashmina</option>
+                <option value="segi-empat">Segi Empat / Voal</option>
+                <option value="bergo">Bergo & Instan</option>
+                <option value="syari">Hijab Syar'i</option>
+                <option value="aksesoris">Aksesoris</option>
+              </select>
+            </div>
+
+            <!-- Add Product Button -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+              <button 
+                onclick="resetProductsToDefault()" 
+                class="px-3 py-2.5 border border-stone-300 hover:bg-stone-100 text-stone-600 rounded-xl text-xs font-semibold transition"
+                title="Kembalikan data produk ke contoh bawaan">
+                <i class="fas fa-rotate-left mr-1"></i> Reset Bawaan
+              </button>
+              <button 
+                onclick="openProductModal()" 
+                class="px-5 py-2.5 bg-rose-800 hover:bg-rose-900 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md shadow-rose-900/20 transition active:scale-95">
+                <i class="fas fa-plus"></i>
+                <span>Tambah Produk Baru</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Product Table List -->
+          <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200">
+                  <tr>
+                    <th class="p-4">Foto & Produk</th>
+                    <th class="p-4">Kategori</th>
+                    <th class="p-4">Harga Promo</th>
+                    <th class="p-4">Harga Asli</th>
+                    <th class="p-4">Varian Warna</th>
+                    <th class="p-4">Badge</th>
+                    <th class="p-4 text-right">Tindakan</th>
+                  </tr>
+                </thead>
+                <tbody id="adminProductsTableBody" class="divide-y divide-stone-100">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="adminProductsEmpty" class="hidden py-16 text-center">
+              <div class="w-16 h-16 mx-auto mb-3 bg-stone-100 text-stone-400 rounded-full flex items-center justify-center text-2xl">
+                <i class="fas fa-box-open"></i>
+              </div>
+              <h4 class="font-serif-luxury font-bold text-lg text-stone-800">Tidak ada produk ditemukan</h4>
+              <p class="text-xs text-stone-500">Coba ubah kata kunci pencarian atau tambah produk baru.</p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================
+             TAB 3: EDIT ISI WEBSITE (CMS CONTENT MANAGER)
+             ==================================================== -->
+        <section id="view-siteContent" class="hidden space-y-6">
+          
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
+            <i class="fas fa-wand-magic-sparkles text-amber-600 text-lg mt-0.5"></i>
+            <div>
+              <h4 class="text-xs font-bold text-amber-900">Editor Konten Halaman Web Secara Langsung (Live CMS)</h4>
+              <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">
+                Ubah teks judul, promosi, nomor WhatsApp pemesanan, dan kontak toko di bawah ini. Begitu Anda menekan tombol <strong>Simpan Perubahan</strong>, isi di halaman pengunjung (landing page) akan langsung ter-update secara otomatis!
+              </p>
+            </div>
+          </div>
+
+          <form id="siteContentForm" onsubmit="handleSaveSiteContent(event)" class="space-y-6">
+            
+            <!-- Section 1: Top Promo Announcement -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <div class="flex items-center gap-2 border-b border-stone-100 pb-3">
+                <i class="fas fa-bullhorn text-rose-800"></i>
+                <h3 class="font-serif-luxury font-bold text-lg text-stone-900">Bar Pengumuman Promo (Top Banner)</h3>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-2">
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Teks Pengumuman Promo</label>
+                  <input id="cmsPromoText" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Kode Voucher Diskon</label>
+                  <input id="cmsPromoCoupon" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800 uppercase font-mono" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Nominal Potongan Voucher (Rp)</label>
+                <input id="cmsPromoDiscount" type="number" class="w-full max-w-xs px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+            </div>
+
+            <!-- Section 2: Hero Section Texts -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <div class="flex items-center gap-2 border-b border-stone-100 pb-3">
+                <i class="fas fa-image text-rose-800"></i>
+                <h3 class="font-serif-luxury font-bold text-lg text-stone-900">Bagian Utama (Hero Banner)</h3>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Teks Badge Kecil Atas</label>
+                  <input id="cmsHeroBadge" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Teks Tombol CTA Utama</label>
+                  <input id="cmsHeroCtaText" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Judul Utama (Headline)</label>
+                <input id="cmsHeroTitle" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800 font-semibold" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Deskripsi / Subtitle Headline</label>
+                <textarea id="cmsHeroSubtitle" rows="3" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800"></textarea>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">URL Foto Model Hero Banner</label>
+                <input id="cmsHeroImage" type="url" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+            </div>
+
+            <!-- Section 3: WhatsApp & Contact Information -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <div class="flex items-center gap-2 border-b border-stone-100 pb-3">
+                <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
+                <h3 class="font-serif-luxury font-bold text-lg text-stone-900">Kontak Pemesanan WhatsApp & Informasi Toko</h3>
+              </div>
+
+              <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800">
+                <strong>Penting:</strong> Nomor WhatsApp di bawah ini adalah nomor tujuan saat pembeli menekan tombol checkout atau chat konsultasi di website. Gunakan format kode negara (contoh: <code>6281234567890</code>).
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Nomor WhatsApp CS (Format 62...)</label>
+                  <input id="cmsWhatsAppNumber" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-emerald-600 font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Nama Brand / Toko</label>
+                  <input id="cmsStoreName" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Alamat Fisik Toko</label>
+                <input id="cmsStoreAddress" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Jam Operasional CS</label>
+                  <input id="cmsStoreHours" type="text" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Link Akun Instagram</label>
+                  <input id="cmsInstagramUrl" type="url" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Link Akun TikTok</label>
+                  <input id="cmsTiktokUrl" type="url" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit CTA -->
+            <div class="flex items-center justify-between pt-2">
+              <button 
+                type="button" 
+                onclick="resetCmsContentToDefault()" 
+                class="px-4 py-2.5 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-600 text-xs font-semibold transition">
+                Reset Teks ke Default
+              </button>
+
+              <button 
+                type="submit" 
+                class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-95 flex items-center gap-2">
+                <i class="fas fa-check"></i>
+                <span>Simpan Perubahan Konten</span>
+              </button>
+            </div>
+
+          </form>
+
+        </section>
+
+        <!-- ====================================================
+             TAB 4: RIWAYAT PESANAN WHATSAPP
+             ==================================================== -->
+        <section id="view-orders" class="hidden space-y-6">
+          
+          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+              <h3 class="font-serif-luxury font-bold text-lg text-stone-900">Riwayat Pesanan yang Dikirim ke WhatsApp</h3>
+              <p class="text-xs text-stone-500">Mencatat data pengunjung yang melakukan klik checkout WhatsApp dari website</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button onclick="clearOrderHistory()" class="px-3.5 py-2 border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-xl transition">
+                <i class="fas fa-trash-can mr-1"></i> Bersihkan Riwayat
+              </button>
+            </div>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200">
+                  <tr>
+                    <th class="p-4">ID & Waktu</th>
+                    <th class="p-4">Nama Pelanggan</th>
+                    <th class="p-4">No. WhatsApp</th>
+                    <th class="p-4">Item Pesanan</th>
+                    <th class="p-4">Ekspedisi & Bayar</th>
+                    <th class="p-4">Total</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersTableBody" class="divide-y divide-stone-100">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="adminOrdersEmpty" class="hidden py-16 text-center">
+              <div class="w-16 h-16 mx-auto mb-3 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <h4 class="font-serif-luxury font-bold text-lg text-stone-800">Belum Ada Pesanan Masuk</h4>
+              <p class="text-xs text-stone-500">Setiap pengunjung yang checkout via WhatsApp di website akan otomatis tercatat di sini.</p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================
+             TAB 5: DETAIL PENGUNJUNG HARIAN (ANALYTICS)
+             ==================================================== -->
+        <section id="view-analytics" class="hidden space-y-6">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs font-bold text-stone-500 uppercase">Rasio Perangkat Pengunjung</span>
+              <div class="mt-4 space-y-3 text-xs">
+                <div>
+                  <div class="flex justify-between font-semibold mb-1">
+                    <span>Smartphone (Mobile)</span>
+                    <span class="text-rose-800 font-bold">82%</span>
+                  </div>
+                  <div class="w-full bg-stone-100 rounded-full h-2">
+                    <div class="bg-rose-700 h-2 rounded-full" style="width: 82%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-semibold mb-1">
+                    <span>Laptop / Komputer Desktop</span>
+                    <span class="text-stone-700 font-bold">18%</span>
+                  </div>
+                  <div class="w-full bg-stone-100 rounded-full h-2">
+                    <div class="bg-stone-500 h-2 rounded-full" style="width: 18%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs font-bold text-stone-500 uppercase">Metode Pembayaran Terfavorit</span>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="flex justify-between py-1 border-b border-stone-100">
+                  <span class="text-stone-600">1. Transfer BCA</span>
+                  <span class="font-bold text-stone-900">45%</span>
+                </div>
+                <div class="flex justify-between py-1 border-b border-stone-100">
+                  <span class="text-stone-600">2. COD (Bayar di Tempat)</span>
+                  <span class="font-bold text-stone-900">32%</span>
+                </div>
+                <div class="flex justify-between py-1 border-b border-stone-100">
+                  <span class="text-stone-600">3. QRIS (All E-Wallet)</span>
+                  <span class="font-bold text-stone-900">23%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs font-bold text-stone-500 uppercase">Performa Konversi WhatsApp</span>
+              <div class="mt-4">
+                <div class="text-3xl font-extrabold text-emerald-600" id="analyticConversionRate">4.8%</div>
+                <p class="text-xs text-stone-500 mt-1">Pengunjung yang melakukan klik pemesanan ke WhatsApp Admin.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Daily Visitors History Table -->
+          <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-stone-100 flex items-center justify-between">
+              <div>
+                <h3 class="font-serif-luxury font-bold text-base text-stone-900">Tabel Kunjungan 14 Hari Terakhir</h3>
+                <p class="text-xs text-stone-500">Mencatat tanggal, pengunjung unik, dan tayangan halaman secara harian</p>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200">
+                  <tr>
+                    <th class="p-4">Tanggal</th>
+                    <th class="p-4">Pengunjung Unik</th>
+                    <th class="p-4">Total Tayangan (Page Views)</th>
+                    <th class="p-4">Klik Checkout WA</th>
+                    <th class="p-4">Tingkat Konversi</th>
+                  </tr>
+                </thead>
+                <tbody id="adminVisitorsTableBody" class="divide-y divide-stone-100">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================
+             TAB 6: PENGATURAN AKUN ADMIN
+             ==================================================== -->
+        <section id="view-settings" class="hidden space-y-6">
+          
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm max-w-xl space-y-5">
+            <h3 class="font-serif-luxury font-bold text-lg text-stone-900 border-b border-stone-100 pb-3">
+              Ganti Kredensial Akun Login Admin
+            </h3>
+
+            <div id="settingsAlert" class="hidden p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200"></div>
+
+            <form onsubmit="handleUpdateAdminCredentials(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Username Baru</label>
+                <input id="newAdminUsername" type="text" required class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Kata Sandi Baru</label>
+                <input id="newAdminPassword" type="password" required placeholder="Minimal 6 karakter" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 mb-1">Konfirmasi Kata Sandi Baru</label>
+                <input id="confirmNewAdminPassword" type="password" required class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+              </div>
+
+              <button type="submit" class="px-6 py-2.5 bg-rose-800 hover:bg-rose-900 text-white rounded-xl text-xs font-bold transition active:scale-95">
+                Simpan Perubahan Akun
+              </button>
+            </form>
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ==========================================================
+       MODAL: FORM TAMBAH / EDIT PRODUK
+       ========================================================== -->
+  <div id="productModal" class="modal-overlay fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-box relative bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] flex flex-col">
+      
+      <!-- Header -->
+      <div class="p-5 border-b border-stone-100 flex items-center justify-between bg-stone-50 flex-shrink-0">
+        <h3 id="productModalTitle" class="font-serif-luxury font-bold text-lg text-stone-900">Tambah Produk Baru</h3>
+        <button onclick="closeProductModal()" class="w-8 h-8 rounded-full hover:bg-stone-200 text-stone-500 flex items-center justify-center transition">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Form Body -->
+      <form id="productForm" onsubmit="handleSaveProduct(event)" class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
+        <input type="hidden" id="formProductId" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Nama Produk Hijab *</label>
+            <input id="formProductName" type="text" required placeholder="cth: Pashmina Silk Shimmer" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Kategori *</label>
+            <select id="formProductCategory" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800 bg-white">
+              <option value="pashmina">Pashmina</option>
+              <option value="segi-empat">Segi Empat / Voal</option>
+              <option value="bergo">Bergo & Instan</option>
+              <option value="syari">Hijab Syar'i</option>
+              <option value="aksesoris">Ciput & Aksesoris</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Harga Promo (Rp) *</label>
+            <input id="formProductPrice" type="number" required placeholder="cth: 55000" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Harga Coret (Rp)</label>
+            <input id="formProductOriginalPrice" type="number" placeholder="cth: 75000" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Badge Produk</label>
+            <input id="formProductBadge" type="text" placeholder="cth: Best Seller / Diskon 20%" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Bahan / Karakteristik Kain</label>
+            <input id="formProductMaterial" type="text" placeholder="cth: Voal Paris Premium Japan" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Ukuran / Dimensi</label>
+            <input id="formProductSize" type="text" placeholder="cth: 115 cm x 115 cm" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-700 mb-1">URL Foto Produk *</label>
+          <input id="formProductImage" type="url" required placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-700 mb-1">Deskripsi Produk</label>
+          <textarea id="formProductDescription" rows="3" placeholder="Jelaskan keunggulan produk hijab ini..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-700 mb-1">Pilihan Varian Warna (Pisahkan dengan koma)</label>
+          <input id="formProductColors" type="text" placeholder="Rose Gold, Oat Latte, Dusty Mauve, Midnight Black" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-rose-800" />
+          <p class="text-[10px] text-stone-400 mt-1">Warna akan dibuatkan swatches otomatis untuk katalog.</p>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeProductModal()" class="px-5 py-2.5 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-600 font-semibold transition">
+            Batal
+          </button>
+          <button type="submit" class="px-6 py-2.5 bg-rose-800 hover:bg-rose-900 text-white rounded-xl font-bold shadow-md shadow-rose-900/20 transition active:scale-95">
+            Simpan Produk
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Global Admin Toast -->
+  <div id="adminToast" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-none text-xs">
+    <i class="fas fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="adminToastText">Aksi berhasil dilakukan</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/admin.js"></script>
+
+</body>
+</html>

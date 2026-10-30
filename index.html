@@ -51,12 +51,12 @@
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
       <div class="flex items-center gap-2">
         <span class="bg-amber-400 text-neutral-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Promo Spesial</span>
-        <span>✨ Diskon s.d 35% + Voucher Potongan Rp 10.000 dengan kode: <strong class="text-amber-300 font-mono">SHOFIEBARU</strong></span>
+        <span id="livePromoText">✨ Diskon s.d 35% + Voucher Potongan Rp 10.000 dengan kode: <strong class="text-amber-300 font-mono">SHOFIEBARU</strong></span>
       </div>
       <div class="hidden md:flex items-center gap-4 text-rose-200">
         <span class="flex items-center gap-1.5"><i class="fas fa-truck-fast"></i> Pengiriman Cepat Se-Indonesia</span>
         <span>|</span>
-        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Shofie%20Hijab,%20saya%20butuh%20bantuan%20konsultasi" target="_blank" class="hover:text-white transition flex items-center gap-1">
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Shofie%20Hijab,%20saya%20butuh%20bantuan%20konsultasi" target="_blank" class="live-wa-link hover:text-white transition flex items-center gap-1">
           <i class="fab fa-whatsapp"></i> CS WhatsApp: 0812-3456-7890
         </a>
       </div>
@@ -104,6 +104,11 @@
             <i class="fas fa-search text-sm"></i>
           </a>
 
+          <!-- Admin Dashboard Link -->
+          <a href="admin.html" class="w-10 h-10 rounded-full border border-stone-200 hover:border-amber-400 hover:bg-amber-50 flex items-center justify-center text-neutral-600 hover:text-amber-800 transition" title="Masuk ke Dashboard Admin">
+            <i class="fas fa-user-gear text-sm"></i>
+          </a>
+
           <!-- Cart Button with live counter -->
           <button 
             type="button" 
@@ -142,6 +147,10 @@
         <a href="#flashsale" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Promo Flash Sale</a>
         <a href="#testimoni" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">Ulasan Pembeli</a>
         <a href="#faq" onclick="toggleMobileMenu()" class="py-2 px-3 rounded-lg hover:bg-rose-50 hover:text-rose-800 transition">FAQ & Bantuan</a>
+        <a href="admin.html" class="py-2 px-3 rounded-lg bg-amber-50 text-amber-900 font-bold transition flex items-center gap-2">
+          <i class="fas fa-lock text-xs"></i>
+          <span>Dashboard Admin Toko</span>
+        </a>
       </div>
     </div>
   </header>
@@ -160,28 +169,28 @@
         <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
           
           <!-- Quality Tag -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100/80 border border-rose-200 text-rose-900 text-xs font-bold tracking-wide">
+          <div id="liveHeroBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100/80 border border-rose-200 text-rose-900 text-xs font-bold tracking-wide">
             <span class="w-2 h-2 rounded-full bg-rose-600"></span>
             Koleksi Terbaru Muslimah 2026
           </div>
 
           <!-- Main Heading -->
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif-luxury font-bold text-neutral-900 leading-[1.15]">
+          <h1 id="liveHeroTitle" class="text-4xl sm:text-5xl lg:text-6xl font-serif-luxury font-bold text-neutral-900 leading-[1.15]">
             Elegan, Nyaman & <span class="italic text-rose-800">Menawan</span> di Setiap Momen.
           </h1>
 
           <!-- Subtitle -->
-          <p class="text-neutral-600 text-base md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+          <p id="liveHeroSubtitle" class="text-neutral-600 text-base md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
             Hadirkan sentuhan anggun dengan hijab premium Shofie. Dibuat dari serat pilihan yang sejuk, jatuh sempurna, tidak menerawang, dan mudah dibentuk tegak paripurna di dahi tanpa ribet.
           </p>
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
             <a href="#katalog" class="w-full sm:w-auto px-8 py-4 bg-rose-800 hover:bg-rose-900 text-white font-bold rounded-2xl shadow-lg shadow-rose-900/25 flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 text-sm md:text-base">
-              <span>Buka Katalog Sekarang</span>
+              <span id="liveHeroCtaText">Buka Katalog Sekarang</span>
               <i class="fas fa-arrow-right text-xs"></i>
             </a>
-            <a href="https://wa.me/6281234567890?text=Halo%20Shofie%20Hijab,%20saya%20mau%20tanya-tanya%20seputar%20koleksi%20hijabnya" target="_blank" class="w-full sm:w-auto px-7 py-4 bg-white hover:bg-stone-50 border border-stone-200 hover:border-emerald-500 text-neutral-800 hover:text-emerald-700 font-bold rounded-2xl shadow-sm flex items-center justify-center gap-3 transition-all text-sm md:text-base">
+            <a href="https://wa.me/6281234567890?text=Halo%20Shofie%20Hijab,%20saya%20mau%20tanya-tanya%20seputar%20koleksi%20hijabnya" target="_blank" class="live-wa-link w-full sm:w-auto px-7 py-4 bg-white hover:bg-stone-50 border border-stone-200 hover:border-emerald-500 text-neutral-800 hover:text-emerald-700 font-bold rounded-2xl shadow-sm flex items-center justify-center gap-3 transition-all text-sm md:text-base">
               <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
               <span>Konsultasi Warna via WA</span>
             </a>
@@ -212,6 +221,7 @@
             <!-- Main Hero Image Card -->
             <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-stone-200 aspect-[4/5]">
               <img 
+                id="liveHeroImage"
                 src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=80" 
                 alt="Shofie Hijab Model Elegan" 
                 class="w-full h-full object-cover object-center"
@@ -659,15 +669,15 @@
           <ul class="space-y-3 text-xs text-stone-400">
             <li class="flex items-start gap-2.5">
               <i class="fas fa-map-marker-alt text-rose-500 mt-0.5"></i>
-              <span>Jl. Melati Hijab No. 88, Kemang, Jakarta Selatan</span>
+              <span id="liveStoreAddress">Jl. Melati Hijab No. 88, Kemang, Jakarta Selatan</span>
             </li>
             <li class="flex items-start gap-2.5">
               <i class="fab fa-whatsapp text-emerald-500 mt-0.5"></i>
-              <span>WhatsApp: 0812-3456-7890</span>
+              <span id="liveStoreWa">WhatsApp: 0812-3456-7890</span>
             </li>
             <li class="flex items-start gap-2.5">
               <i class="fas fa-clock text-amber-500 mt-0.5"></i>
-              <span>Senin - Sabtu: 08.00 - 21.00 WIB</span>
+              <span id="liveStoreHours">Senin - Sabtu: 08.00 - 21.00 WIB</span>
             </li>
           </ul>
         </div>
@@ -676,7 +686,13 @@
 
       <!-- Bottom Bar: Payments, Shipping, & Copyright -->
       <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-        <p>© 2026 <strong>Shofie Hijab</strong>. Hak Cipta Dilindungi Undang-Undang.</p>
+        <div class="flex items-center gap-3">
+          <p>© 2026 <strong id="footerStoreName" class="text-white">Shofie Hijab</strong>. Hak Cipta Dilindungi.</p>
+          <span>•</span>
+          <a href="admin.html" class="text-amber-400 hover:text-amber-300 font-semibold transition flex items-center gap-1.5 px-2.5 py-1 rounded bg-stone-800">
+            <i class="fas fa-lock text-[10px]"></i> Login Admin
+          </a>
+        </div>
         
         <!-- Payment & Courier Badges -->
         <div class="flex flex-wrap items-center gap-2">

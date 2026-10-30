@@ -2,22 +2,22 @@
 // SHOFIE HIJAB - APPLICATION CORE & E-COMMERCE LOGIC
 // ==========================================================
 
-// Global Store Configuration
-const STORE_CONFIG = {
+// Global Store Configuration (Can be updated via Admin CMS)
+let STORE_CONFIG = {
   name: "Shofie Hijab",
-  tagline: "Elegansi Muslimah Masa Kini",
-  whatsappNumber: "6281234567890", // Ganti dengan nomor WhatsApp aktif toko (format 62...)
-  instagram: "@shofiehijab.official",
-  shopee: "shofiehijab_official",
-  tokopedia: "shofie-hijab-store",
+  tagline: "Modest Elegance",
+  whatsappNumber: "6281234567890",
+  instagram: "https://instagram.com",
+  tiktok: "https://tiktok.com",
   defaultCoupon: {
     code: "SHOFIEBARU",
     discount: 10000,
-    type: "fixed" // 'fixed' or 'percent'
+    type: "fixed"
   }
 };
 
 // Application State
+let activeProductsList = [];
 let cart = JSON.parse(localStorage.getItem('shofie_hijab_cart')) || [];
 let activeCategory = 'all';
 let searchQuery = '';
@@ -27,6 +27,8 @@ let appliedCouponCode = '';
 
 // DOM Elements & Initialization
 document.addEventListener('DOMContentLoaded', () => {
+  initLiveSiteData();
+  trackVisitorAnalytics();
   renderProducts();
   renderTestimonials();
   renderFaqs();
@@ -37,13 +39,135 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================
+// 0. LIVE CMS CONTENT & ANALYTICS TRACKER
+// ==========================================================
+function initLiveSiteData() {
+  // 1. Sync Products from localStorage
+  const storedProducts = localStorage.getItem('shofie_products');
+  if (storedProducts) {
+    try {
+      activeProductsList = JSON.parse(storedProducts);
+    } catch (e) {
+      activeProductsList = typeof productsData !== 'undefined' ? [...productsData] : [];
+    }
+  } else {
+    activeProductsList = typeof productsData !== 'undefined' ? [...productsData] : [];
+    localStorage.setItem('shofie_products', JSON.stringify(activeProductsList));
+  }
+
+  // 2. Sync CMS Site Content from localStorage
+  const storedContent = localStorage.getItem('shofie_site_content');
+  if (storedContent) {
+    try {
+      const cms = JSON.parse(storedContent);
+
+      if (cms.whatsappNumber) STORE_CONFIG.whatsappNumber = cms.whatsappNumber;
+      if (cms.storeName) STORE_CONFIG.name = cms.storeName;
+      if (cms.promoCouponCode) {
+        STORE_CONFIG.defaultCoupon.code = cms.promoCouponCode;
+        STORE_CONFIG.defaultCoupon.discount = cms.promoCouponDiscount || 10000;
+      }
+
+      // Update DOM Elements if present
+      const topPromoEl = document.getElementById('livePromoText');
+      if (topPromoEl && cms.promoBannerText) {
+        topPromoEl.innerHTML = `${escapeHtml(cms.promoBannerText)} <strong class="text-amber-300 font-mono">${escapeHtml(cms.promoCouponCode || 'SHOFIEBARU')}</strong>`;
+      }
+
+      const heroBadgeEl = document.getElementById('liveHeroBadge');
+      if (heroBadgeEl && cms.heroBadge) {
+        heroBadgeEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-600"></span> ${escapeHtml(cms.heroBadge)}`;
+      }
+
+      const heroTitleEl = document.getElementById('liveHeroTitle');
+      if (heroTitleEl && cms.heroTitle) {
+        heroTitleEl.textContent = cms.heroTitle;
+      }
+
+      const heroSubEl = document.getElementById('liveHeroSubtitle');
+      if (heroSubEl && cms.heroSubtitle) {
+        heroSubEl.textContent = cms.heroSubtitle;
+      }
+
+      const heroCtaEl = document.getElementById('liveHeroCtaText');
+      if (heroCtaEl && cms.heroCtaText) {
+        heroCtaEl.textContent = cms.heroCtaText;
+      }
+
+      const heroImgEl = document.getElementById('liveHeroImage');
+      if (heroImgEl && cms.heroImageUrl) {
+        heroImgEl.src = cms.heroImageUrl;
+      }
+
+      const footerNameEl = document.getElementById('footerStoreName');
+      if (footerNameEl && cms.storeName) {
+        footerNameEl.textContent = cms.storeName;
+      }
+
+      const footerAddrEl = document.getElementById('liveStoreAddress');
+      if (footerAddrEl && cms.storeAddress) {
+        footerAddrEl.textContent = cms.storeAddress;
+      }
+
+      const footerHoursEl = document.getElementById('liveStoreHours');
+      if (footerHoursEl && cms.storeHours) {
+        footerHoursEl.textContent = cms.storeHours;
+      }
+
+      const footerWaEl = document.getElementById('liveStoreWa');
+      if (footerWaEl && cms.whatsappNumber) {
+        footerWaEl.textContent = `WhatsApp: ${cms.whatsappNumber}`;
+      }
+
+      // Update WA Link hrefs
+      document.querySelectorAll('.live-wa-link').forEach(link => {
+        link.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=Halo%20Admin%20Shofie%20Hijab,%20saya%20tertarik%20dengan%20koleksi%20hijab%20Anda`;
+      });
+
+    } catch (e) {
+      console.error("Error loading CMS content:", e);
+    }
+  }
+}
+
+function trackVisitorAnalytics() {
+  try {
+    const todayStr = new Date().toISOString().split('T')[0];
+    let analytics = JSON.parse(localStorage.getItem('shofie_analytics')) || [];
+
+    let todayEntry = analytics.find(item => item.date === todayStr);
+    if (!todayEntry) {
+      todayEntry = {
+        date: todayStr,
+        visitors: 1,
+        pageviews: 1,
+        orders: 0
+      };
+      analytics.push(todayEntry);
+      sessionStorage.setItem('shofie_visited_session', 'true');
+    } else {
+      // Check if new visitor session
+      if (!sessionStorage.getItem('shofie_visited_session')) {
+        todayEntry.visitors += 1;
+        sessionStorage.setItem('shofie_visited_session', 'true');
+      }
+      todayEntry.pageviews += 1;
+    }
+
+    localStorage.setItem('shofie_analytics', JSON.stringify(analytics));
+  } catch (e) {
+    console.error("Analytics tracker error:", e);
+  }
+}
+
+// ==========================================================
 // 1. PRODUCT CATALOG RENDERING & FILTERING
 // ==========================================================
 function renderProducts() {
   const container = document.getElementById('productsGrid');
   if (!container) return;
 
-  let filtered = [...productsData];
+  let filtered = [...activeProductsList];
 
   // Category filter
   if (activeCategory !== 'all') {
@@ -55,8 +179,8 @@ function renderProducts() {
     const q = searchQuery.toLowerCase().trim();
     filtered = filtered.filter(item => 
       item.name.toLowerCase().includes(q) ||
-      item.material.toLowerCase().includes(q) ||
-      item.description.toLowerCase().includes(q)
+      (item.material && item.material.toLowerCase().includes(q)) ||
+      (item.description && item.description.toLowerCase().includes(q))
     );
   }
 
@@ -66,7 +190,7 @@ function renderProducts() {
   } else if (sortBy === 'price-high') {
     filtered.sort((a, b) => b.price - a.price);
   } else if (sortBy === 'rating') {
-    filtered.sort((a, b) => b.rating - a.rating);
+    filtered.sort((a, b) => (b.rating || 5) - (a.rating || 5));
   } else {
     // default popular
     filtered.sort((a, b) => b.id - a.id);
@@ -149,10 +273,10 @@ function renderProducts() {
             <!-- Rating & Sold -->
             <div class="flex items-center gap-2 text-xs text-neutral-500 mb-3">
               <span class="flex items-center text-amber-500 font-semibold">
-                <i class="fas fa-star text-[11px] mr-1"></i> ${product.rating}
+                <i class="fas fa-star text-[11px] mr-1"></i> ${product.rating || 5.0}
               </span>
               <span>•</span>
-              <span>Terjual ${product.soldCount}</span>
+              <span>Terjual ${product.soldCount || '0'}</span>
             </div>
 
             <!-- Price -->
@@ -218,7 +342,7 @@ let currentModalProduct = null;
 let selectedModalColor = null;
 
 function openQuickView(productId) {
-  const product = productsData.find(p => p.id === productId);
+  const product = activeProductsList.find(p => p.id === productId);
   if (!product) return;
 
   currentModalProduct = product;
@@ -228,7 +352,7 @@ function openQuickView(productId) {
   const content = document.getElementById('quickViewContent');
   if (!modal || !content) return;
 
-  const colorOptionsHtml = product.colors.map((c, idx) => `
+  const colorOptionsHtml = product.colors ? product.colors.map((c, idx) => `
     <button 
       type="button"
       onclick="selectModalColor('${c.name}', this)"
@@ -236,7 +360,7 @@ function openQuickView(productId) {
       <span class="w-3.5 h-3.5 rounded-full inline-block shadow-sm" style="background-color: ${c.hex};"></span>
       <span>${c.name}</span>
     </button>
-  `).join('');
+  `).join('') : '';
 
   content.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6 md:p-8">
@@ -262,10 +386,10 @@ function openQuickView(productId) {
             <span class="uppercase tracking-wider font-semibold text-rose-800">${product.category}</span>
             <div class="flex items-center gap-2">
               <span class="flex items-center text-amber-500 font-bold">
-                <i class="fas fa-star mr-1"></i> ${product.rating}
+                <i class="fas fa-star mr-1"></i> ${product.rating || 5.0}
               </span>
               <span>•</span>
-              <span>Terjual ${product.soldCount}</span>
+              <span>Terjual ${product.soldCount || '0'}</span>
             </div>
           </div>
 
@@ -290,31 +414,33 @@ function openQuickView(productId) {
 
           <!-- Description -->
           <p class="text-neutral-600 text-sm leading-relaxed mb-5">
-            ${escapeHtml(product.description)}
+            ${escapeHtml(product.description || 'Koleksi hijab terbaik dari Shofie Hijab.')}
           </p>
 
           <!-- Specs -->
           <div class="bg-stone-50 rounded-xl p-3.5 mb-5 space-y-2 text-xs">
             <div class="flex items-start">
               <span class="text-neutral-400 w-20 flex-shrink-0 font-medium">Bahan:</span>
-              <span class="text-neutral-800 font-semibold">${product.material}</span>
+              <span class="text-neutral-800 font-semibold">${product.material || 'Material Pilihan Premium'}</span>
             </div>
             <div class="flex items-start">
               <span class="text-neutral-400 w-20 flex-shrink-0 font-medium">Ukuran:</span>
-              <span class="text-neutral-800 font-semibold">${product.size}</span>
+              <span class="text-neutral-800 font-semibold">${product.size || 'Standar Nyaman'}</span>
             </div>
           </div>
 
           <!-- Color Variants -->
-          <div class="mb-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-semibold text-neutral-800">Pilihan Warna:</span>
-              <span id="selectedColorLabel" class="text-xs font-bold text-rose-800">${selectedModalColor}</span>
+          ${colorOptionsHtml ? `
+            <div class="mb-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-neutral-800">Pilihan Warna:</span>
+                <span id="selectedColorLabel" class="text-xs font-bold text-rose-800">${selectedModalColor}</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${colorOptionsHtml}
+              </div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              ${colorOptionsHtml}
-            </div>
-          </div>
+          ` : ''}
 
           <!-- Quantity Selector -->
           <div class="flex items-center gap-4 mb-6">
@@ -330,14 +456,14 @@ function openQuickView(productId) {
         <!-- Action CTAs -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-stone-200">
           <button 
-            type="button"
+            type="button" 
             onclick="addModalProductToCart()" 
             class="w-full py-3 px-4 bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition active:scale-95">
             <i class="fas fa-shopping-bag"></i>
             <span>Tambah ke Keranjang</span>
           </button>
           <button 
-            type="button"
+            type="button" 
             onclick="buyModalProductDirectWhatsApp()" 
             class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition active:scale-95">
             <i class="fab fa-whatsapp text-lg"></i>
@@ -399,8 +525,6 @@ function buyModalProductDirectWhatsApp() {
   if (!currentModalProduct) return;
   const qtyInput = document.getElementById('modalQtyInput');
   const qty = parseInt(qtyInput ? qtyInput.value : 1) || 1;
-  
-  // Directly open checkout modal with this single product pre-selected
   openSingleProductCheckout(currentModalProduct, selectedModalColor, qty);
   closeQuickView();
 }
@@ -409,7 +533,7 @@ function buyModalProductDirectWhatsApp() {
 // 3. CART MANAGEMENT
 // ==========================================================
 function addToCartDirect(productId, colorName, qty = 1) {
-  const product = productsData.find(p => p.id === productId);
+  const product = activeProductsList.find(p => p.id === productId);
   if (!product) return;
   addToCart(product, colorName, qty);
   showToast(`"${product.name}" ditambahkan ke keranjang belanja!`);
@@ -550,7 +674,7 @@ function closeCartDrawer() {
 }
 
 // ==========================================================
-// 4. WHATSAPP CHECKOUT ENGINE
+// 4. WHATSAPP CHECKOUT ENGINE & ORDER LOGGING
 // ==========================================================
 let checkoutItems = [];
 
@@ -565,7 +689,7 @@ function openCartCheckout() {
 }
 
 function buyNowDirect(productId, defaultColor) {
-  const product = productsData.find(p => p.id === productId);
+  const product = activeProductsList.find(p => p.id === productId);
   if (!product) return;
   openSingleProductCheckout(product, defaultColor, 1);
 }
@@ -733,11 +857,47 @@ function submitWhatsAppOrder(event) {
     return;
   }
 
+  let subtotal = 0;
+  checkoutItems.forEach(item => subtotal += (item.price * item.qty));
+  const grandTotal = Math.max(0, subtotal - activeDiscount);
+
+  // Log order into localStorage for Admin Dashboard
+  try {
+    const orderItemsSummary = checkoutItems.map(i => `${i.name} (${i.color} x ${i.qty})`).join(', ');
+    const newOrder = {
+      id: `SH-${Math.floor(1000 + Math.random() * 9000)}`,
+      date: new Date().toISOString(),
+      customerName: name,
+      customerPhone: phone,
+      address: address,
+      itemsText: orderItemsSummary,
+      courier: courier,
+      payment: payment,
+      total: grandTotal,
+      status: "Menunggu Konfirmasi"
+    };
+
+    let existingOrders = JSON.parse(localStorage.getItem('shofie_orders')) || [];
+    existingOrders.unshift(newOrder);
+    localStorage.setItem('shofie_orders', JSON.stringify(existingOrders));
+
+    // Update orders counter in analytics
+    const todayStr = new Date().toISOString().split('T')[0];
+    let analytics = JSON.parse(localStorage.getItem('shofie_analytics')) || [];
+    let today = analytics.find(a => a.date === todayStr);
+    if (today) {
+      today.orders = (today.orders || 0) + 1;
+      localStorage.setItem('shofie_analytics', JSON.stringify(analytics));
+    }
+  } catch (err) {
+    console.error("Error saving order log:", err);
+  }
+
   const message = generateWhatsAppMessage(name, phone, address, courier, payment, note);
   const encodedMsg = encodeURIComponent(message);
   const waUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodedMsg}`;
 
-  // If this was from cart, ask to clear cart
+  // If this was from cart, clear cart
   if (cart.length > 0 && checkoutItems.length === cart.length) {
     clearCart();
   }
@@ -754,7 +914,7 @@ function submitWhatsAppOrder(event) {
 // ==========================================================
 function renderTestimonials() {
   const container = document.getElementById('testimonialsGrid');
-  if (!container) return;
+  if (!container || typeof testimonialsData === 'undefined') return;
 
   container.innerHTML = testimonialsData.map(item => `
     <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 flex flex-col justify-between hover:shadow-md transition">
@@ -779,7 +939,7 @@ function renderTestimonials() {
 
 function renderFaqs() {
   const container = document.getElementById('faqsAccordion');
-  if (!container) return;
+  if (!container || typeof faqsData === 'undefined') return;
 
   container.innerHTML = faqsData.map((faq, index) => `
     <div class="border border-stone-200 rounded-2xl overflow-hidden bg-white">
@@ -806,7 +966,6 @@ function toggleFaq(index) {
 
   const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
 
-  // Close all other FAQs
   faqsData.forEach((_, i) => {
     const otherContent = document.getElementById(`faq-ans-${i}`);
     const otherIcon = document.getElementById(`faq-icon-${i}`);
@@ -857,7 +1016,6 @@ function showToast(message) {
 }
 
 function setupEventListeners() {
-  // Category Filter buttons
   const filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -868,7 +1026,6 @@ function setupEventListeners() {
     });
   });
 
-  // Search Input
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -877,7 +1034,6 @@ function setupEventListeners() {
     });
   }
 
-  // Sort Select
   const sortSelect = document.getElementById('sortSelect');
   if (sortSelect) {
     sortSelect.addEventListener('change', (e) => {
@@ -886,7 +1042,6 @@ function setupEventListeners() {
     });
   }
 
-  // Navbar scroll style
   window.addEventListener('scroll', () => {
     const navbar = document.getElementById('mainNavbar');
     if (!navbar) return;
@@ -897,7 +1052,6 @@ function setupEventListeners() {
     }
   });
 
-  // Checkout inputs live preview update
   ['customerName', 'customerPhone', 'customerAddress', 'customerCourier', 'customerPayment', 'customerNotes'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -906,7 +1060,6 @@ function setupEventListeners() {
     }
   });
 
-  // Close modals on overlay click or Escape
   document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
@@ -925,14 +1078,12 @@ function setupEventListeners() {
   });
 }
 
-// Countdown timer for Flash Sale
 function initCountdownTimer() {
   const hoursEl = document.getElementById('cdHours');
   const minutesEl = document.getElementById('cdMinutes');
   const secondsEl = document.getElementById('cdSeconds');
   if (!hoursEl || !minutesEl || !secondsEl) return;
 
-  // Set 8 hours countdown from load
   let totalSeconds = 8 * 3600 + 45 * 60 + 30;
 
   setInterval(() => {
@@ -949,7 +1100,6 @@ function initCountdownTimer() {
   }, 1000);
 }
 
-// Live Sales Popup Simulation
 function startLivePurchaseNotifications() {
   const toast = document.getElementById('livePurchaseToast');
   const toastBuyer = document.getElementById('liveToastBuyer');
@@ -983,18 +1133,15 @@ function startLivePurchaseNotifications() {
     }, 4500);
   }
 
-  // First trigger after 6 seconds, then recurring every 22 seconds
   setTimeout(() => {
     showNextNotification();
     setInterval(showNextNotification, 22000);
   }, 6000);
 }
 
-// Mobile Menu Toggle
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
   if (menu) {
     menu.classList.toggle('hidden');
   }
 }
-
